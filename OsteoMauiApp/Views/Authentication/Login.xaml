@@ -67,7 +67,7 @@
                                FontSize="14"
                                TextColor="Gray" />
 
-                        <!--<Entry Text="{Binding LoginDetails.emailAddress}"
+                        <Entry Text="{Binding LoginDetails.emailAddress}"
                                ReturnType="Next"
                                Style="{StaticResource SFEntry}" />
 
@@ -101,7 +101,7 @@
                                 <TapGestureRecognizer Tapped="OnSignupClicked"/>
                             </Label.GestureRecognizers>
                         </Label>
-                    </StackLayout>-->
+                    </StackLayout>
 
                 </StackLayout>
             </StackLayout>
