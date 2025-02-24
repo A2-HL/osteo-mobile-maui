@@ -16,6 +16,7 @@ public partial class Login : ContentPage
         {
 
         }
+
         _loginVM = new LoginVM(Navigation);
         BindingContext = _loginVM;
 
