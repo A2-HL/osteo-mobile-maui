@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vSWCui24e+k=",
+  "dgSpecHash": "841xrISgg1U=",
   "success": true,
-  "projectFilePath": "D:\\AlphaSquared\\OsteoMobileApp\\OsteoMauiApp\\OsteoMAUIApp\\OsteoMAUIApp.csproj",
+  "projectFilePath": "D:\\AlphaSquared\\osteo-mobile-maui\\OsteoMAUIApp\\OsteoMAUIApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\123\\.nuget\\packages\\googlegson\\2.10.1.4\\googlegson.2.10.1.4.nupkg.sha512",
     "C:\\Users\\123\\.nuget\\packages\\microsoft.bcl.memory\\9.0.0\\microsoft.bcl.memory.9.0.0.nupkg.sha512",
