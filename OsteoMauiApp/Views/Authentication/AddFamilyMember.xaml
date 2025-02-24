@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OsteoMAUIApp.Views.Authentication.AddFamilyMember"
+             Title="">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="20">
+                <StackLayout Spacing="10">
+                    <StackLayout Spacing="0">
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Image Source="osteologo.png" Grid.Column="0" Aspect="Center" HorizontalOptions="Center" />
+                        </Grid>
+
+                        <Label FontSize="25" FontAttributes="Bold"  Text="Family Members!"  Margin="0,50,0,0" />
+                        <Label FontSize="15" Text="Enter your family members's information." FontAttributes="Bold" />
+                    </StackLayout>
+                    <Button
+      HorizontalOptions="End"
+      Margin="0,20,0,0" Text="+ Add Member" BackgroundColor="#00d9bc"
+      TextColor="White" FontAttributes="Bold"/>
+
+                    <Border Stroke="Gray" StrokeThickness="1" Padding="15">
+                        <StackLayout Spacing="10">
+                            <core:SfTextInputLayout Hint="Full Name"  HeightRequest="80" >
+                                <Entry />
+                            </core:SfTextInputLayout>
+                            <core:SfTextInputLayout Hint="Age"  HeightRequest="80" >
+                                <Entry />
+                            </core:SfTextInputLayout>
+                        </StackLayout>
+                    </Border>
+
+
+
+                    <Button
+    Margin="0,20,0,0" Text="Submit" BackgroundColor="#00d9bc"
+    TextColor="White" FontAttributes="Bold"/>
+                    <Button
+   Text="Skip Now" BackgroundColor="White"
+    TextColor="Black"  FontAttributes="Bold"/>
+
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

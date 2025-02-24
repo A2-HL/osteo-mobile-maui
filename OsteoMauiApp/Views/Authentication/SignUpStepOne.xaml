@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OsteoMAUIApp.Views.Authentication.SignUpStepOne"
+             Title="">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="20">
+                <StackLayout Spacing="10">
+                    <!-- Welcome Message -->
+                    <StackLayout Spacing="0">
+                        <Label FontSize="25" FontAttributes="Bold" Text="Let's Register an Account!" />
+                        <Label FontSize="15" Text="Hello user, start your journey!" FontAttributes="Bold" />
+                    </StackLayout>
+
+                    <!-- Radio Button for Role Selection -->
+                    <StackLayout Margin="0,10,0,0" Spacing="10" HorizontalOptions="Center">
+                      
+                        <StackLayout Orientation="Horizontal" Spacing="15">
+                            <RadioButton Content="Patient" FontAttributes="Bold"/>
+                            <RadioButton Content="Practitioner" FontAttributes="Bold" />
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!-- User Input Fields (Replaces SfTextInputLayout) -->
+                    <StackLayout Spacing="10">
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="First Name"/>
+                        </Border>
+
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="Last Name"/>
+                        </Border>
+
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="Email" Keyboard="Email"/>
+                        </Border>
+
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="Phone Number" Keyboard="Telephone"/>
+                        </Border>
+
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="Home Address"/>
+                        </Border>
+
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="Password" IsPassword="True"/>
+                        </Border>
+
+                        <Border Stroke="Gray" StrokeThickness="1" Padding="8" >
+                            <Entry Placeholder="Confirm Password" IsPassword="True"/>
+                        </Border>
+                    </StackLayout>
+
+                    <!-- Sign-Up Button -->
+                    <Button Text="Sign Up" Clicked="OnSignupClicked" BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold" />
+
+                    <!-- Already Have an Account? -->
+                    <StackLayout Margin="0,30,0,0" Orientation="Horizontal" HorizontalOptions="Center" Spacing="0">
+                        <Label FontSize="14" FontAttributes="Bold" Text="Already have an account? "/>
+                        <Label Text="Login" FontAttributes="Bold" TextColor="#00d9bc">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLoginTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OsteoMAUIApp.Views.Authentication.VerifyAccount"
+             Title="">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="20">
+                <StackLayout Spacing="10">
+                    <StackLayout Spacing="0">
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Image Source="osteologo.png" Grid.Column="0" Aspect="Center" HorizontalOptions="Center" />
+                        </Grid>
+
+                        <Label FontSize="25" FontAttributes="Bold"  Text="Verify Account!"  Margin="0,50,0,0" />
+                        <Label FontSize="15" Text="Your security matters. Verify your details." FontAttributes="Bold" />
+                    </StackLayout>
+
+                    <Border Stroke="Gray" StrokeThickness="1" Padding="15" Margin="0,40,0,0" >
+                        <StackLayout Spacing="10">
+                            <Label FontSize="14" FontAttributes="Bold" Text="Phone Number Verification" />
+                            <core:SfTextInputLayout Hint="Enter OTP" HeightRequest="80">
+                                <Entry Keyboard="Numeric" />
+                            </core:SfTextInputLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+                                <Button Text="Resend OTP"  BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold"/>
+                                <Button Text="Edit Phone #"  BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Border>
+
+                    <Border Stroke="Gray" StrokeThickness="1" Padding="15">
+                        <StackLayout Spacing="10">
+                            <Label FontSize="14" FontAttributes="Bold" Text="Email Verification" />
+                            <core:SfTextInputLayout Hint="Enter OTP" HeightRequest="80">
+                                <Entry Keyboard="Numeric" />
+                            </core:SfTextInputLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+                                <Button Text="Resend OTP"  BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold"/>
+                                <Button Text="Edit Email"  BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Border>
+
+                    <Button  Margin="0,20,0,0" Text="Verify Account"  BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold"/>
+
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+
+</ContentPage>
