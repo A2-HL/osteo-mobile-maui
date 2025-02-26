@@ -37,7 +37,11 @@
         <Setter Property="HeightRequest" Value="50"/>
         
     </Style>
-
+    <!-- Style for Activity Indicator Backdrop -->
+    <Style x:Key="ActivityIndicatorBackdrop" TargetType="Frame">
+        <Setter Property="Opacity" Value="0.3" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Black}" />
+    </Style>
     <Style TargetType="IndicatorView">
         <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>

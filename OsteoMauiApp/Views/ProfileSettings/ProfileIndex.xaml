@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             x:Class="OsteoMAUIApp.Views.ProfileSettings.ProfileIndex"
+             Title="Profile Settings">
+
+    <!-- Syncfusion Tab View -->
+    <syncfusion:SfTabView x:Name="TabView" >
+
+        <!-- Profile Settings Tab -->
+        <syncfusion:SfTabItem Header="Profile Settings">
+            <!-- ScrollView to enable scrolling within the tab -->
+            <ScrollView>
+                <VerticalStackLayout Margin="0, 15, 0, 0">
+
+                    <!-- Profile Image -->
+                    <Frame WidthRequest="180" HeightRequest="180"
+                           CornerRadius="90"
+                           BorderColor="#ebebeb"
+                           BackgroundColor="#ebebeb"
+                           Padding="5"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center">
+                        <Frame WidthRequest="170" HeightRequest="170"
+                               CornerRadius="85"
+                               BorderColor="#ebebeb"
+                               Padding="0"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center">
+                            <Image Source="dotnet_bot.png"
+                                   Aspect="AspectFill"
+                                   WidthRequest="170"
+                                   HeightRequest="170"/>
+                        </Frame>
+                    </Frame>
+
+                    <!-- Availability Toggle -->
+                    <HorizontalStackLayout HorizontalOptions="Center" Margin="0, 10, 0, 0">
+                        <Label Text="Availability"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+                        <Switch x:Name="AvailabilityToggle"
+                                IsToggled="False"
+                                Margin="10,0,0,0"
+                                VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <!-- Input Fields -->
+                    <VerticalStackLayout Margin="20, 10, 20, 0">
+                        <!-- First Name -->
+                        <Label Text="First Name"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Entry x:Name="FirstNameEntry"
+                               Placeholder="Enter your first name"
+                               FontSize="14"
+                               BackgroundColor="#F5F5F5"
+                               TextColor="Black"
+                               Margin="0,5,0,10"
+                               HeightRequest="40"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"/>
+
+                        <!-- Last Name -->
+                        <Label Text="Last Name"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Entry x:Name="LastNameEntry"
+                               Placeholder="Enter your last name"
+                               FontSize="14"
+                               BackgroundColor="#F5F5F5"
+                               TextColor="Black"
+                               Margin="0,5,0,10"
+                               HeightRequest="40"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"/>
+
+                        <!-- Education -->
+                        <Label Text="Education"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Entry x:Name="EducationEntry"
+                               Placeholder="Enter your education details"
+                               FontSize="14"
+                               BackgroundColor="#F5F5F5"
+                               TextColor="Black"
+                               Margin="0,5,0,10"
+                               HeightRequest="40"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"/>
+
+                        <!-- Phone Number -->
+                        <Label Text="Phone Number"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Entry x:Name="PhoneNumberEntry"
+                               Placeholder="Enter your phone number"
+                               Keyboard="Telephone"
+                               FontSize="14"
+                               BackgroundColor="#F5F5F5"
+                               TextColor="Black"
+                               Margin="0,5,0,10"
+                               HeightRequest="40"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"/>
+
+                        <!-- Distance Willing to Travel -->
+                        <Label Text="Distance Willing to Travel (KM)"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Picker x:Name="TravelDistancePicker"
+                                Title="Select Distance"
+                                FontSize="14"
+                                BackgroundColor="#F5F5F5"
+                                TextColor="Black"
+                                Margin="0,5,0,10"
+                                HeightRequest="40"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Center">
+                            <Picker.Items>
+                                <x:String>50 KM</x:String>
+                                <x:String>100 KM</x:String>
+                                <x:String>150 KM</x:String>
+                                <x:String>200 KM</x:String>
+                                <x:String>250 KM</x:String>
+                            </Picker.Items>
+                        </Picker>
+
+                        <!-- My Home Address -->
+                        <Label Text="My Home Address"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Entry x:Name="HomeAddressEntry"
+                               Placeholder="Enter your home address"
+                               FontSize="14"
+                               BackgroundColor="#F5F5F5"
+                               TextColor="Black"
+                               Margin="0,5,0,10"
+                               HeightRequest="40"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"/>
+
+                        <!-- Provinces Willing To Travel -->
+                        <Label Text="Provinces Willing To Travel" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
+
+                        <!-- List of Provinces with Checkboxes -->
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="AlbertaCheckBox"/>
+                                <Label Text="Alberta" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="BritishColumbiaCheckBox"/>
+                                <Label Text="British Columbia" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="ManitobaCheckBox"/>
+                                <Label Text="Manitoba" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="NewBrunswickCheckBox"/>
+                                <Label Text="New Brunswick" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="NewfoundlandCheckBox"/>
+                                <Label Text="Newfoundland and Labrador" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="NovaScotiaCheckBox"/>
+                                <Label Text="Nova Scotia" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="OntarioCheckBox"/>
+                                <Label Text="Ontario" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="PrinceEdwardIslandCheckBox"/>
+                                <Label Text="Prince Edward Island" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="QuebecCheckBox"/>
+                                <Label Text="Quebec" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <CheckBox x:Name="SaskatchewanCheckBox"/>
+                                <Label Text="Saskatchewan" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Bio Section -->
+                        <Label Text="Bio" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
+                        <Editor x:Name="BioEditor"
+        Placeholder="Write something about yourself..."
+        FontSize="14"
+        BackgroundColor="#F5F5F5"
+        TextColor="Black"
+        Margin="0,5,0,10"
+        HeightRequest="120"
+        AutoSize="TextChanges"
+        HorizontalOptions="Fill"/>
+
+                        <!-- Osteopathic Manual Practice Section -->
+                        <Label Text="Osteopathic Manual Practice" 
+       FontSize="16" 
+       FontAttributes="Bold" 
+       HorizontalOptions="Start"/>
+                        <Entry x:Name="OsteopathicPracticeEntry"
+       Placeholder="Enter details"
+       FontSize="14"
+       BackgroundColor="#F5F5F5"
+       TextColor="Black"
+       Margin="0,5,0,10"
+       HeightRequest="40"
+       HorizontalOptions="Fill"/>
+
+                        <!-- Daily Patient Load Section -->
+                        <Label Text="Daily Patient Load" 
+       FontSize="16" 
+       FontAttributes="Bold" 
+       HorizontalOptions="Start"/>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" >
+                            <Entry x:Name="MinPatientLoadEntry"
+           Placeholder="Minimum Load"
+           Keyboard="Numeric"
+           FontSize="14"
+           BackgroundColor="#F5F5F5"
+           TextColor="Black"
+           Margin="0,5,0,10"
+           HeightRequest="40"
+           HorizontalOptions="Fill"
+           VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                            <Entry x:Name="MaxPatientLoadEntry"
+           Placeholder="Maximum Load"
+           Keyboard="Numeric"
+           FontSize="14"
+           BackgroundColor="#F5F5F5"
+           TextColor="Black"
+           Margin="0,5,0,10"
+           HeightRequest="40"
+           HorizontalOptions="Fill"
+           VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <!-- Adults Section (Left) -->
+                            <VerticalStackLayout Grid.Column="0" >
+                                <Label Text="Adults" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
+                                <Entry x:Name="AdultsEntry"
+               Placeholder="Enter Adults Count"
+               Keyboard="Numeric"
+               FontSize="14"
+               BackgroundColor="#F5F5F5"
+               TextColor="Black"
+               Margin="0,5,0,10"
+               HeightRequest="40"
+               HorizontalOptions="Fill"
+               VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- Kids Section (Right) -->
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="Kids" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
+                                <Entry x:Name="KidsEntry"
+               Placeholder="Enter Kids Count"
+               Keyboard="Numeric"
+               FontSize="14"
+               BackgroundColor="#F5F5F5"
+               TextColor="Black"
+               Margin="0,5,0,10"
+               HeightRequest="40"
+               HorizontalOptions="Fill"
+               VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                        
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <!-- Horses Section (Right) -->
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="Horses" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
+                                <Entry x:Name="HorsesEntry"
+Placeholder="Enter Horses Count"
+Keyboard="Numeric"
+FontSize="14"
+BackgroundColor="#F5F5F5"
+TextColor="Black"
+Margin="0,5,0,10"
+HeightRequest="40"
+HorizontalOptions="Fill"
+VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- Cats/Dogs Section (Left) -->
+                            <VerticalStackLayout Grid.Column="0" >
+                                <Label Text="Cats/Dogs" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
+                                <Entry x:Name="CatsDogsEntry"
+Placeholder="Enter Cats/Dogs Count"
+Keyboard="Numeric"
+FontSize="14"
+BackgroundColor="#F5F5F5"
+TextColor="Black"
+Margin="0,5,0,10"
+HeightRequest="40"
+HorizontalOptions="Fill"
+VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                        </Grid>
+
+                        <!-- Other Section -->
+                        <Label Text="Other" 
+FontSize="16" 
+FontAttributes="Bold" 
+HorizontalOptions="Start"/>
+                        <Entry x:Name="OtherEntry"
+Placeholder="Please specify."
+FontSize="14"
+BackgroundColor="#F5F5F5"
+TextColor="Black"
+Margin="0,5,0,10"
+HeightRequest="40"
+HorizontalOptions="Fill"/>
+
+                        <!-- Avg. Length of Treatment Session -->
+                        <Label Text="Avg. Length of Treatment Session"
+       FontSize="16"
+       FontAttributes="Bold"
+       HorizontalOptions="Start"/>
+                        <Picker x:Name="AvgLengthofTreatmentSessionPicker"
+        Title="Select Length"
+        FontSize="14"
+        BackgroundColor="#F5F5F5"
+        TextColor="Black"
+        Margin="0,5,0,10"
+        HeightRequest="40"
+        HorizontalOptions="Fill"
+        VerticalOptions="Center">
+                            <Picker.Items>
+                                <x:String>15 Minutes</x:String>
+                                <x:String>20 Minutes</x:String>
+                                <x:String>25 Minutes</x:String>
+                                <x:String>30 Minutes</x:String>
+                                <x:String>35 Minutes</x:String>
+                                <x:String>40 Minutes</x:String>
+                                <x:String>45 Minutes</x:String>
+                                <x:String>50 Minutes</x:String>
+                                <x:String>55 Minutes</x:String>
+                                <x:String>60 Minutes</x:String>
+                            </Picker.Items>
+                        </Picker>
+
+                        <VerticalStackLayout >
+                            <!-- Upload Title -->
+                            <Label Text="Upload Certificates" 
+           FontSize="16" 
+           FontAttributes="Bold" 
+           HorizontalOptions="Start" 
+           Margin="0,10,0,5"/>
+
+                            <!-- Upload Button -->
+                            <Button Text="Select Image" 
+            FontSize="14" 
+            BackgroundColor="#00c5aa" 
+            TextColor="White"
+            Clicked="OnSelectImageClicked"
+            HeightRequest="40"
+            CornerRadius="10"/>
+
+                            <!-- Preview Image -->
+                            <Image x:Name="UploadedImage" 
+           HeightRequest="150" 
+           WidthRequest="150"
+           Aspect="AspectFit"
+           Margin="0,10,0,0"
+           IsVisible="False"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Padding="0,20,0,10">
+                            <Button Text="Save Settings"
+            FontSize="16"
+            BackgroundColor="#00c5aa"
+            TextColor="White"
+            HeightRequest="45"
+            CornerRadius="10"
+            Clicked="OnSaveSettingsClicked"
+            HorizontalOptions="Fill"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+        </syncfusion:SfTabItem>
+
+        <!-- Notification Settings Tab -->
+        <syncfusion:SfTabItem Header="Notification Settings">
+            <ScrollView>
+                <VerticalStackLayout Padding="20">
+
+                    <!-- Table Headers -->
+                    <Grid ColumnDefinitions="2*, 1*, 1*" RowDefinitions="Auto" Padding="0,0,0,10">
+                        <Label Text="Notify Me"
+                       FontAttributes="Bold"
+                       Grid.Column="0"
+                       VerticalOptions="Center"/>
+                        <Label Text="Email"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Grid.Column="1"
+                       VerticalOptions="Center"/>
+                        <Label Text="SMS"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Grid.Column="2"
+                       VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Notification Options with Checkboxes -->
+                    <Grid ColumnDefinitions="2*, 1*, 1*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+
+                        <!-- Row 1 -->
+                        <Label Text="Notify me about nearby events" Grid.Column="0" Grid.Row="0" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="0" HorizontalOptions="Center"/>
+
+                        <!-- Row 2 -->
+                        <Label Text="Notify me about upcoming events" Grid.Column="0" Grid.Row="1" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="1" HorizontalOptions="Center"/>
+
+                        <!-- Row 3 -->
+                        <Label Text="Remainder me about upcoming events" Grid.Column="0" Grid.Row="2" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="2" HorizontalOptions="Center"/>
+
+                        <!-- Row 4 -->
+                        <Label Text="Notify me about patient event registration" Grid.Column="0" Grid.Row="3" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="3" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="3" HorizontalOptions="Center"/>
+
+                        <!-- Row 5 -->
+                        <Label Text="Notify me about practitioner event requests" Grid.Column="0" Grid.Row="4" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="4" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="4" HorizontalOptions="Center"/>
+
+                        <!-- Row 6 -->
+                        <Label Text="Notify me about new event registration" Grid.Column="0" Grid.Row="5" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="5" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="5" HorizontalOptions="Center"/>
+
+                        <!-- Row 7 -->
+                        <Label Text="Notify me about medical history update." Grid.Column="0" Grid.Row="6" Margin="0,0,10,10"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="1" Grid.Row="6" HorizontalOptions="Center"/>
+                        <CheckBox IsChecked="True" IsEnabled="False" Grid.Column="2" Grid.Row="6" HorizontalOptions="Center"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </syncfusion:SfTabItem>
+
+
+        <!-- Account Settings Tab -->
+        <syncfusion:SfTabItem Header="Account Settings">
+            <!-- ScrollView to enable scrolling within the tab -->
+            <ScrollView>
+                <VerticalStackLayout Padding="20">
+
+                    <!-- Current Password -->
+                    <Label Text="Current Password" FontSize="14" Margin="0,10,0,5"/>
+                    <Entry x:Name="CurrentPasswordEntry"
+                   IsPassword="True"
+                   Placeholder="Enter Current Password"
+                   FontSize="14"
+                   BackgroundColor="#F5F5F5"
+                   TextColor="Black"
+                   Margin="0,5,0,10"
+                   HeightRequest="40"
+                   HorizontalOptions="Fill"
+                   TextChanged="ValidatePasswordForm"/>
+                    <Label x:Name="CurrentPasswordError" Text="Current password is required"
+                   TextColor="Red" FontSize="12" IsVisible="False"/>
+
+                    <!-- New Password -->
+                    <Label Text="New Password" FontSize="14" Margin="0,10,0,5"/>
+                    <Entry x:Name="NewPasswordEntry"
+                   IsPassword="True"
+                   Placeholder="Enter New Password"
+                   FontSize="14"
+                   BackgroundColor="#F5F5F5"
+                   TextColor="Black"
+                   Margin="0,5,0,10"
+                   HeightRequest="40"
+                   HorizontalOptions="Fill"
+                          TextChanged="ValidatePasswordForm" />
+                    <Label x:Name="NewPasswordError" Text="New password is required"
+                   TextColor="Red" FontSize="12" IsVisible="False"/>
+
+                    <!-- Confirm Password -->
+                    <Label Text="Confirm Password" FontSize="14" Margin="0,10,0,5"/>
+                    <Entry x:Name="ConfirmPasswordEntry"
+                   IsPassword="True"
+                   Placeholder="Confirm New Password"
+                   FontSize="14"
+                   BackgroundColor="#F5F5F5"
+                   TextColor="Black"
+                   Margin="0,5,0,10"
+                   HeightRequest="40"
+                   HorizontalOptions="Fill"
+                           TextChanged="ValidatePasswordForm"/>
+                    <Label x:Name="ConfirmPasswordError" Text="Passwords do not match"
+                   TextColor="Red" FontSize="12" IsVisible="False"/>
+
+
+                    <!-- Submit Button -->
+                    <Button x:Name="PasswordSubmitButton"
+                        Text="Submit"
+                    FontSize="16"
+                    BackgroundColor="#00c5aa"
+                    TextColor="White"
+                    CornerRadius="5"
+                    Margin="0,20,0,10"
+                    HeightRequest="45"
+                    Clicked="OnSubmitPasswordChange"/>
+                </VerticalStackLayout>
+            </ScrollView>
+        </syncfusion:SfTabItem>
+
+    </syncfusion:SfTabView>
+
+</ContentPage>

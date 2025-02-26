@@ -9,6 +9,7 @@ using OsteoMAUIApp.Helpers;
 using OsteoMAUIApp.Models.Authentication;
 using OsteoMAUIApp.Services.Interfaces;
 using OsteoMAUIApp.Views.Authentication;
+using OsteoMAUIApp.Models;
 
 namespace OsteoMAUIApp.Services.Implementations
 {
@@ -66,7 +67,42 @@ namespace OsteoMAUIApp.Services.Implementations
             }
             return Response;
         }
+        public async Task<ResponseStatusModel> SignupAsync(SignUpModel credentials)
+        {
+            ResponseStatusModel Response = null;
+            var uri = GlobalSettings.Instance.APIsBaseUrl + "Account/SignUp";
+            try
+            {
+                var n = credentials.SerializeSignupFields();
+                var content = new StringContent(n);
 
+                HttpClient httpClient;
+                httpClient = request.CreateHttpClient();
+
+
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                HttpResponseMessage response = await httpClient.PostAsync(uri, content);
+
+                string serialized = await response.Content.ReadAsStringAsync();
+                var _serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    NullValueHandling = NullValueHandling.Ignore
+                };
+                _serializerSettings.Converters.Add(new StringEnumConverter());
+                var result = await Task.Run(() =>
+                    JsonConvert.DeserializeObject<ResponseStatusModel>(serialized, _serializerSettings));
+                
+                Response = result;
+            }
+            catch (Exception ex)
+            {
+                Response = null;
+                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+            }
+            return Response;
+        }
         public Task<bool> LogoutAsync()
         {
             throw new NotImplementedException();
