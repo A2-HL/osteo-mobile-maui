@@ -1,5 +1,4 @@
 using OsteoMAUIApp.ViewModels.Authentication;
-
 namespace OsteoMAUIApp.Views.Authentication;
 
 public partial class Login : ContentPage
@@ -16,19 +15,18 @@ public partial class Login : ContentPage
         {
 
         }
-
         _loginVM = new LoginVM(Navigation);
         BindingContext = _loginVM;
 
-        Device.BeginInvokeOnMainThread(() => { _loginVM.InitializeCommand.Execute(null); });
     }
     private async void OnSignupClicked(object sender, EventArgs e)
     {
-        // Navigate to the SignUp.xaml page
-        await Navigation.PushAsync(new SignUpStepOne());
+        _loginVM.SignupCommand.Execute(null);
     }
     private void OnLoginClicked(object sender, EventArgs e)
     {
         _loginVM.LoginCommand.Execute(null);
     }
+   
+
 }
