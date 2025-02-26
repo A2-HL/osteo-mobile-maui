@@ -73,6 +73,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Authentication\SignUp.xaml.cs">
+	    <DependentUpon>SignUp.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Authentication\VerifyAccount.xaml.cs">
 	    <DependentUpon>VerifyAccount.xaml</DependentUpon>
 	  </Compile>
@@ -97,7 +100,7 @@
 	  <MauiXaml Update="Views\Authentication\Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Authentication\SignUpStepOne.xaml">
+	  <MauiXaml Update="Views\Authentication\SignUp.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Authentication\VerifyAccount.xaml">
@@ -109,6 +112,12 @@
 	  <MauiXaml Update="Views\ProfileSettings\ProfileIndex.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+	  <PackageReference Include="Xamarin.Firebase.Messaging">
+	    <Version>123.0.7</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 </Project>

@@ -175,7 +175,23 @@ namespace OsteoMAUIApp.Helpers
                 Console.WriteLine($"Error opening settings: {ex.Message}");
             }
         }
+        public static void DismissKeyboard()
+        {
+#if ANDROID
+                var inputMethodManager = (Android.Views.InputMethods.InputMethodManager)
+                    Android.App.Application.Context.GetSystemService(Android.Content.Context.InputMethodService);
 
-      
+                var currentActivity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
+                var currentFocus = currentActivity?.CurrentFocus;
+
+                if (currentFocus != null)
+                {
+                    inputMethodManager.HideSoftInputFromWindow(currentFocus.WindowToken, Android.Views.InputMethods.HideSoftInputFlags.None);
+                }
+#elif IOS
+                        UIKit.UIApplication.SharedApplication.KeyWindow.EndEditing(true);
+#endif
+        }
+
     }
 }
