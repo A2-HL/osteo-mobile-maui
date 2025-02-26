@@ -1,16 +1,20 @@
 ﻿using Newtonsoft.Json;
 using OsteoMAUIApp.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace OsteoMAUIApp.Models.Authentication
 {
     public class LoginModel : BaseViewModel
     {
+       
+
+        
+
+   
+        #region email
         private string _emailAddress;
         public string emailAddress
         {
@@ -41,6 +45,44 @@ namespace OsteoMAUIApp.Models.Authentication
             }
         }
 
+        #endregion
+
+        #region phonenumber
+
+        private string _phoneNumber;
+        public string phoneNumber
+        {
+            get { return this._phoneNumber; }
+            set
+            {
+                if (this._phoneNumber != value)
+                {
+                    SetProperty(ref _phoneNumber, value);
+                    ValidatePhoneNumber();
+                }
+            }
+        }
+
+        private string _phoneNumberError;
+        public string phoneNumberError
+        {
+            get
+            {
+                return this._phoneNumberError;
+            }
+
+            set
+            {
+                if (this._phoneNumberError != value)
+                {
+                    SetProperty(ref _phoneNumberError, value);
+                }
+            }
+        }
+
+        #endregion
+
+        #region currentPassword
         private string _currentPassword;
         public string currentPassword
         {
@@ -55,21 +97,6 @@ namespace OsteoMAUIApp.Models.Authentication
             }
         }
         private string _currentPasswordError;
-
-        private int _userTypeId;
-        public int userTypeId
-        {
-            get { return this._userTypeId; }
-            set
-            {
-                if (this._userTypeId != value)
-                {
-                    SetProperty(ref _userTypeId, value);
-                    ValidateUserTypeId();
-                }
-            }
-        }
-        private string _userTypeIdError;
         public string currentPasswordError
         {
             get
@@ -85,22 +112,42 @@ namespace OsteoMAUIApp.Models.Authentication
                 }
             }
         }
-        public string fcmToken { get; set; }
+        #endregion
 
+        #region userType
+
+        private int _userTypeId;
+        public int userTypeId
+        {
+            get { return this._userTypeId; }
+            set
+            {
+                if (this._userTypeId != value)
+                {
+                    SetProperty(ref _userTypeId, value);
+                }
+            }
+        }
+        #endregion
+    
         #region |Login Model Validations|
         public async Task<bool> ValidateModelForLogin()
-        
-        
-        
+
+
+
         {
             await Task.Run(() =>
             {
                 ValidateEmail();
+                ValidatePhoneNumber();
                 ValidateCurrentPassword();
-                ValidateUserTypeId();
+
             });
-            if (string.IsNullOrEmpty(emailAddressError) && string.IsNullOrEmpty(currentPasswordError)
-                && string.IsNullOrEmpty(_userTypeIdError))
+            if (string.IsNullOrEmpty(emailAddressError) && string.IsNullOrEmpty(currentPasswordError) && _userTypeId == 2)
+            {
+                return true;
+            }
+            else if (string.IsNullOrEmpty(phoneNumberError) && string.IsNullOrEmpty(currentPasswordError) && _userTypeId == 1)
             {
                 return true;
             }
@@ -125,11 +172,7 @@ namespace OsteoMAUIApp.Models.Authentication
             currentPasswordError = string.IsNullOrEmpty(currentPassword) ? "Password is required." : "";
 
         }
-        private void ValidateUserTypeId()
-        {
-            _userTypeIdError = userTypeId <= 0 ? "User type is required." : "";
 
-        }
         private void ValidateEmail()
         {
             if (string.IsNullOrEmpty(emailAddress))
@@ -144,6 +187,10 @@ namespace OsteoMAUIApp.Models.Authentication
             {
                 emailAddressError = "";
             }
+        }
+        private void ValidatePhoneNumber()
+        {
+            phoneNumberError = string.IsNullOrEmpty(phoneNumber) ? "Phone number is required." : "";
         }
         bool IsValidEmail(string email)
         {
@@ -160,8 +207,9 @@ namespace OsteoMAUIApp.Models.Authentication
             var data = new Dictionary<string, object>
             {
                 { "email", emailAddress },
+                { "phoneNumber", phoneNumber },
                 { "password", currentPassword },
-                 { "userTypeId", userTypeId },
+                { "userTypeId", userTypeId },
                 { "deviceToken", fcmToken }
             };
 
@@ -177,6 +225,10 @@ namespace OsteoMAUIApp.Models.Authentication
 
             return JsonConvert.SerializeObject(data, Formatting.Indented);
         }
+
+
         #endregion
+
+        public string fcmToken { get; set; }
     }
 }

@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:OsteoMAUIApp"
+    xmlns:profile="clr-namespace:OsteoMAUIApp.Views.ProfileSettings"
     Shell.FlyoutBehavior="Disabled"
     Title="OsteoMAUIApp">
 
@@ -12,4 +13,8 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
+    <ShellContent
+    Title="Profile Settings"
+    ContentTemplate="{DataTemplate profile:ProfileIndex}"
+    Route="ProfileIndex" />
 </Shell>
