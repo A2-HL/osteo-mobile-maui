@@ -4,107 +4,109 @@
              xmlns:inputlayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:dataform="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:converters="clr-namespace:OsteoMAUIApp.Converters"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OsteoMAUIApp.Views.Authentication.Login"
-              NavigationPage.HasNavigationBar="False"
-             Title="">
+             NavigationPage.HasNavigationBar="False"
+             Title=""
+             BindingContext="{Binding Source={x:Static Application.Current}, Path=MainPage.BindingContext}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:SelectedBorderConverter x:Key="SelectedBorderConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid Padding="20">
-            <StackLayout Spacing="10">
+        <Grid>
+            <StackLayout  Padding="20" Spacing="10">
                 <StackLayout Spacing="0">
-                    <Grid Grid.Row="0">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Image Margin="0,50,0,0" Source="osteologo.png" Grid.Column="0" Aspect="Center" HorizontalOptions="Center" />
+                        <Image Margin="0,50,0,0" Source="osteologo.png" Aspect="Center" HorizontalOptions="Center"/>
                     </Grid>
-                    <Label FontSize="25" Style="{StaticResource fontAttribute}"  Text="Lets Sign you in "  Margin="0,50,0,0" />
-                    <Label FontSize="15" Text="Welcome Back ,"  Style="{StaticResource fontAttribute}"   Margin="0,10,0,0" />
-                    <Label FontSize="15" Text="You have been missed" Style="{StaticResource fontAttribute}"   />
+
+                    <Label FontSize="25" Style="{StaticResource fontAttribute}"  Text="Let's Sign you in"  Margin="0,50,0,0"/>
+                    <Label FontSize="15" Text="Welcome Back" Style="{StaticResource fontAttribute}"   Margin="0,10,0,0"/>
+                    <!--<Label FontSize="15" Text="You have been missed" Style="{StaticResource fontAttribute}"/>-->
+                </StackLayout>
+
+                <StackLayout Margin="0,30,0,0" Spacing="20" Orientation="Horizontal" >
+                    <!-- Practitioner Selection -->
+                    <Frame Padding="10"
+           BorderColor="{Binding SelectedUserType, Converter={StaticResource SelectedBorderConverter}, ConverterParameter=2}"
+           CornerRadius="10" HorizontalOptions="FillAndExpand">
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="practitioner.png" WidthRequest="40" HeightRequest="40"/>
+                            <Label Text="Practitioner" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="2"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Patient Selection -->
+                    <Frame Padding="10"
+           BorderColor="{Binding SelectedUserType, Converter={StaticResource SelectedBorderConverter}, ConverterParameter=1}"
+           CornerRadius="10" HorizontalOptions="FillAndExpand">
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="patient.png" WidthRequest="40" HeightRequest="40"/>
+                            <Label Text="Patient" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="1"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </StackLayout>
+
+                <!-- Email Input (Visible when Practitioner is selected) -->
+                <StackLayout Spacing="0" IsVisible="{Binding IsEmailVisible}">
+                    <inputlayout:SfTextInputLayout Hint="Email">
+                        <Entry HeightRequest="30" Keyboard="Email" Text="{Binding LoginDetails.emailAddress}" ReturnType="Next"/>
+                    </inputlayout:SfTextInputLayout>
+                    <Label Text="{Binding LoginDetails.emailAddressError}" Style="{StaticResource ErrorLabel}"/>
 
                 </StackLayout>
 
-                <StackLayout Margin="0,30,0,0"
-             Grid.Row="2"
-             Spacing="10"
-             HorizontalOptions="Fill"
-             VerticalOptions="Start">
+                <!-- Phone Number Input (Visible when Patient is selected) -->
+                <StackLayout Spacing="0" IsVisible="{Binding IsPhoneNumberVisible}">
+                    <inputlayout:SfTextInputLayout Hint="Phone Number">
+                        <Entry HeightRequest="30" Text="{Binding LoginDetails.phoneNumber}" ReturnType="Next"/>
+                    </inputlayout:SfTextInputLayout>
+                    <Label Text="{Binding LoginDetails.phoneNumberError}" Style="{StaticResource ErrorLabel}"/>
 
-                    <StackLayout Spacing="0">
-                        <StackLayout Orientation="Vertical" Spacing="20" HorizontalOptions="FillAndExpand">
-
-                            <!-- Patient Radio Button -->
-                            <Frame Padding="10" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" HasShadow="False" BorderColor="Gray" CornerRadius="10">
-                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
-                                    <Image Source="patient.png" WidthRequest="60" HeightRequest="60" HorizontalOptions="Center"/>
-                                    <Label Text="Patient" FontSize="16" TextColor="Black" HorizontalOptions="Center"/>
-                                </StackLayout>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="1"/>
-                                </Frame.GestureRecognizers>
-                            </Frame>
-
-                            <!-- Practitioner Radio Button -->
-                            <Frame Padding="10" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" HasShadow="False" BorderColor="Gray" CornerRadius="10">
-                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
-                                    <Image Source="practitioner.png" WidthRequest="60" HeightRequest="60" HorizontalOptions="Center"/>
-                                    <Label Text="Practitioner" FontSize="16" TextColor="Black" HorizontalOptions="Center"/>
-                                </StackLayout>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="2"/>
-                                </Frame.GestureRecognizers>
-                            </Frame>
-
-                        </StackLayout>
+                </StackLayout>
 
 
-                        <Label Text="{Binding LoginDetails.userTypeIdError}" Style="{StaticResource ErrorLabel}" />
-                    </StackLayout>
-                    <StackLayout Spacing="0">
-                        <Label Text="Email" 
-                               FontSize="14"
-                               TextColor="Gray" />
+                <StackLayout Spacing="0">
+                    <inputlayout:SfTextInputLayout Hint="Password" EnablePasswordVisibilityToggle="true">
+                        <Entry HeightRequest="30" IsPassword="True" Text="{Binding LoginDetails.currentPassword}" ReturnType="Done" Style="{StaticResource SFEntry}"/>
+                    </inputlayout:SfTextInputLayout>
+                    <Label Text="{Binding LoginDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
+                </StackLayout>
 
-                        <Entry Text="{Binding LoginDetails.emailAddress}"
-                               ReturnType="Next"
-                               Style="{StaticResource SFEntry}" />
+                <Label Text="Forgot Password ?"  Margin="0,-30,0,0" HorizontalOptions="End" Style="{StaticResource labeltextcolor}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer/>
+                    </Label.GestureRecognizers>
+                </Label>
 
-                        <Label Text="{Binding LoginDetails.emailAddressError}" Style="{StaticResource ErrorLabel}" />
-                    </StackLayout>
-                    <StackLayout Spacing="0">
-                        <Label Text="Password" FontSize="14"
-                         TextColor="Gray"/>
+                <Button Clicked="OnLoginClicked" Text="Sign In" Style="{StaticResource button}"/>
 
-                        <Entry IsPassword="True"
-           Text="{Binding LoginDetails.currentPassword}"
-           ReturnType="Done"
-           Style="{StaticResource SFEntry}" />
-
-                        <Label Text="{Binding LoginDetails.currentPasswordError}" 
-           Style="{StaticResource ErrorLabel}" />
-                    </StackLayout>
-
-
-                    <Label Text="Forgot Password ?" HorizontalOptions="End" Style="{StaticResource labeltextcolor}">
+                <StackLayout Margin="0,50,0,0" Orientation="Horizontal" HorizontalOptions="Center" Spacing="0">
+                    <Label FontSize="Subtitle" Style="{StaticResource fontAttribute}" Text="Don't have an account ? "/>
+                    <Label Text="Register Now" Style="{StaticResource ColoredBoldLabel}">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer />
+                            <TapGestureRecognizer Tapped="OnSignupClicked"/>
                         </Label.GestureRecognizers>
                     </Label>
-
-                    <Button Clicked="OnLoginClicked" Text="Sign In" Style="{StaticResource button}" />
-                    <StackLayout Margin="0,30,0,0" Orientation="Horizontal" HorizontalOptions="Center" Spacing="0">
-                        <Label FontSize="Subtitle" Style="{StaticResource fontAttribute}" Text="Don't have an account ? " />
-                        <Label Text="Register Now" Style="{StaticResource ColoredBoldLabel}" x:Name="signup" >
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSignupClicked"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
-
                 </StackLayout>
             </StackLayout>
+            <Frame IsVisible="{Binding IsBusy}" Style="{StaticResource ActivityIndicatorBackdrop}"/>
+            <ActivityIndicator HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+        IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

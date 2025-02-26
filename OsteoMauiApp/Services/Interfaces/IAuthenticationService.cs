@@ -1,4 +1,5 @@
-﻿using OsteoMAUIApp.Models.Authentication;
+﻿using OsteoMAUIApp.Models;
+using OsteoMAUIApp.Models.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace OsteoMAUIApp.Services.Interfaces
     public interface IAuthenticationService
     {
         Task<LoginResponseModel> LoginAsync(LoginModel credentials);
-       // Task<ResponseStatusModel> SignupAsync(SignupModel signupModel);
+        Task<ResponseStatusModel> SignupAsync(SignUpModel signupModel);
        // Task<ResponseStatusModel> ForgotPasswordAsync(LoginModel credentials);
         Task<LoginResponseModel> RefreshAccessToken(string refreshToken, string userId);
         Task<bool> LogoutAsync();
