@@ -1211,3 +1211,7 @@
 /OsteoMauiApp/obj/OsteoMAUIApp.csproj.nuget.g.targets
 /OsteoMauiApp/obj/project.assets.json
 /OsteoMauiApp/obj/project.nuget.cache
+/OsteoMauiApp/bin/Debug/net8.0-ios/iossimulator-x64/en-US/Syncfusion.Maui.Buttons.resources.dll
+/OsteoMauiApp/bin/Debug/net8.0-ios/iossimulator-x64/en-US/Syncfusion.Maui.Inputs.resources.dll
+/OsteoMauiApp/bin/Debug/net8.0-maccatalyst/maccatalyst-x64/en-US/Syncfusion.Maui.Buttons.resources.dll
+/OsteoMauiApp/bin/Debug/net8.0-maccatalyst/maccatalyst-x64/en-US/Syncfusion.Maui.Inputs.resources.dll

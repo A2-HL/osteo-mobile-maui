@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+            xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+            xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+            xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+            xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+             x:Class="OsteoMAUIApp.Views.Event.EventReschedule"
+             Title="Event Reschedule">
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="20" VerticalOptions="Fill" HorizontalOptions="Fill">
+            <StackLayout Spacing="0">
+                <Label Text="Rescheduling the event will cancel all the appointment bookings." FontSize="14"/>
+            </StackLayout>
+            <StackLayout Spacing="0" Orientation="Horizontal">
+                <Label Text="Event :" FontSize="14" TextColor="Gray" />
+                <Label Text="Session 2025" FontSize="14"/>
+            </StackLayout>
+            <StackLayout Spacing="0" Orientation="Horizontal">
+                <Label Text="Location :" FontSize="14" TextColor="Gray" />
+                <Label Text="Sector L Dha Phase 1, Lahore, Punjab, Pakistan" FontSize="14" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0,15,0,10">
+                <Label Text="Patient Type" FontSize="14" Margin="0,10,20,0" TextColor="Gray"/>
+                <buttons:SfRadioGroup  x:Name="PatientTypeRadiobuttonGroup" Orientation="Horizontal" SelectedValue="{Binding Reschedule.patientType}"  HorizontalOptions="Start">
+                    <buttons:SfRadioButton Text="Human" CheckedColor="#59D6B8" FontSize="14" TextColor="Gray" Value="1"/>
+                    <buttons:SfRadioButton Text="Animal" CheckedColor="#59D6B8" FontSize="14" TextColor="Gray" Value="2"/>
+                </buttons:SfRadioGroup>
+            </StackLayout>
+            <StackLayout Spacing="0">
+                <Label Text="Date" FontSize="14" TextColor="Gray" />
+                <Entry x:Name="dateEntry" Text="{Binding Reschedule.sessionDay,StringFormat='{0:MM-dd-yyyy}'}" Style="{StaticResource SFEntry}" 
+             IsReadOnly="True" >
+                    <Entry.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOpenDatePickerClicked" />
+                    </Entry.GestureRecognizers>
+                </Entry>
+                <!--<Label Text="{Binding Reschedule.sessionDayError}" Style="{StaticResource ErrorLabel}" />-->
+                <calendar:SfCalendar  x:Name="sessionDate" Mode="Dialog" RelativePosition="AlignTop"
+   View="Month" SelectionMode="Range" NavigationDirection="Horizontal" Background="Transparent" HeightRequest="0"
+   AllowViewNavigation="True" EnablePastDates="False" ActionButtonClicked="Calendar_FooterOkClicked">
+                    <calendar:SfCalendar.HeaderView>
+                        <calendar:CalendarHeaderView Height="70" Background="#59D6B8" TextFormat="ddd, MM, MMM yyyy" ShowNavigationArrows="True">
+                            <calendar:CalendarHeaderView.TextStyle>
+                                <calendar:CalendarTextStyle TextColor="#fff" FontSize="18"
+                         />
+                            </calendar:CalendarHeaderView.TextStyle>
+                        </calendar:CalendarHeaderView>
+                    </calendar:SfCalendar.HeaderView>
+                    <calendar:SfCalendar.FooterView>
+                        <calendar:CalendarFooterView ShowActionButtons="true" />
+                    </calendar:SfCalendar.FooterView>
+                </calendar:SfCalendar>
+            </StackLayout>
+            <StackLayout Spacing="0" Margin="0,15,0,0">
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Orientation="Vertical" Margin="0,0,5,0" Spacing="0" Grid.Column="0">
+                        <Label Text="Start Time" FontSize="14" TextColor="Gray" />
+                        <Entry x:Name="ftimeEntry" Text="{Binding Reschedule.fTime}" Style="{StaticResource SFEntry}" 
+                   IsReadOnly="True">
+                            <Entry.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnOpenFTimePickerClicked" />
+                            </Entry.GestureRecognizers>
+                        </Entry>
+                        <Label Text="{Binding Reschedule.fTimeError}" Style="{StaticResource ErrorLabel}" />
+                        <picker:SfTimePicker x:Name="fromtimePicker" Mode="Dialog" OkButtonClicked="OnTimeFPickerOkButtonClicked" Format="HH_mm" MinuteInterval="15"  SelectedTime="{Binding Event.fTime}" HorizontalOptions="Start" IsVisible="False">
+                            <picker:SfTimePicker.FooterView>
+                                <picker:PickerFooterView Height="40" OkButtonText="Save" CancelButtonText="Exit"/>
+                            </picker:SfTimePicker.FooterView>
+                        </picker:SfTimePicker>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" Margin="5,0,0,0" Spacing="0" Grid.Column="1">
+                        <Label Text="End Time" FontSize="14" TextColor="Gray" />
+                        <Entry x:Name="ttimeEntry" Text="{Binding Reschedule.tTime}" Style="{StaticResource SFEntry}" 
+                    IsReadOnly="True">
+                            <Entry.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnOpenTTimePickerClicked" />
+                            </Entry.GestureRecognizers>
+                        </Entry>
+                        <Label Text="{Binding Reschedule.tTimeError}" Style="{StaticResource ErrorLabel}" />
+                        <picker:SfTimePicker x:Name="totimePicker" Mode="Dialog" OkButtonClicked="OnTimeTPickerOkButtonClicked" Format="HH_mm" MinuteInterval="15"  SelectedTime="{Binding Event.tTime}" HorizontalOptions="Start" IsVisible="False">
+                            <picker:SfTimePicker.FooterView>
+                                <picker:PickerFooterView Height="40" OkButtonText="Save" CancelButtonText="Exit"/>
+                            </picker:SfTimePicker.FooterView>
+                        </picker:SfTimePicker>
+                    </StackLayout>
+                </Grid>
+
+            </StackLayout>
+
+
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,15">
+                <Label Text="Allow Appointments" FontSize="14" Margin="0,10,20,0" TextColor="Gray"/>
+                <buttons:SfSwitch x:Name="sfSwitch" Margin="0,5,0,0"  HeightRequest="30" WidthRequest="60" IsOn="{Binding Reschedule.isScheduleEnable}">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup  x:Name="CommonStates">
+                            <VisualState x:Name="On">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:SwitchSettings
+                   ThumbBackground="#fff"
+                   ThumbStroke="#fff"
+                   TrackBackground="#59D6B8"
+                   TrackStroke="#fff"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Off">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:SwitchSettings
+                  ThumbBackground="#fff"
+                  ThumbStroke="#fff"
+                  TrackBackground="#B5B5C3"
+                  TrackStroke="#B5B5C3"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </buttons:SfSwitch>
+            </StackLayout>
+            <StackLayout Spacing="0">
+                <Label Text="Appointment Length" FontSize="14" TextColor="Gray" />
+                <inputs:SfComboBox x:Name="SessionLengthComboBox"
+     ItemsSource="{Binding TreatmentLengthOptions}"
+     DisplayMemberPath="Text"
+     SelectedItem="{Binding Reschedule.treatmentLength}" />
+            </StackLayout>
+            <buttons:SfButton Margin="0,30" x:Name="sfButton" Background="#59D6B8" VerticalOptions="End" Clicked="RescheduleEventClicked" Text="Reschedule" Style="{StaticResource button}" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
