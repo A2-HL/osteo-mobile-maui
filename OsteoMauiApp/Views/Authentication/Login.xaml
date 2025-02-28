@@ -35,45 +35,45 @@
 
                 <StackLayout Margin="0,30,0,0" Spacing="20" Orientation="Horizontal" >
                     <!-- Practitioner Selection -->
-                    <Frame Padding="10"
-           BorderColor="{Binding SelectedUserType, Converter={StaticResource SelectedBorderConverter}, ConverterParameter=2}"
-           CornerRadius="10" HorizontalOptions="FillAndExpand">
+                    <Border Padding="10" x:Name="PractitionerFrame"
+           Stroke="#00d9bc"
+            HorizontalOptions="FillAndExpand">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                             <Image Source="practitioner.png" WidthRequest="40" HeightRequest="40"/>
                             <Label Text="Practitioner" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
                         </StackLayout>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="2"/>
-                        </Frame.GestureRecognizers>
-                    </Frame>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFrameTappedPractitioner"/>
+                        </Border.GestureRecognizers>
+                    </Border>
 
                     <!-- Patient Selection -->
-                    <Frame Padding="10"
-           BorderColor="{Binding SelectedUserType, Converter={StaticResource SelectedBorderConverter}, ConverterParameter=1}"
-           CornerRadius="10" HorizontalOptions="FillAndExpand">
+                    <Border Padding="10" x:Name="PatientFrame"
+           Stroke="Transparent"
+            HorizontalOptions="FillAndExpand">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                             <Image Source="patient.png" WidthRequest="40" HeightRequest="40"/>
                             <Label Text="Patient" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
                         </StackLayout>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="1"/>
-                        </Frame.GestureRecognizers>
-                    </Frame>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFrameTappedPatient"/>
+                        </Border.GestureRecognizers>
+                    </Border>
                 </StackLayout>
 
                 <!-- Email Input (Visible when Practitioner is selected) -->
-                <StackLayout Spacing="0" IsVisible="{Binding IsEmailVisible}">
+                <StackLayout Spacing="0" x:Name="PractitionerTextBox">
                     <inputlayout:SfTextInputLayout Hint="Email">
-                        <Entry HeightRequest="30" Keyboard="Email" Text="{Binding LoginDetails.emailAddress}" ReturnType="Next"/>
+                        <Entry HeightRequest="30" x:Name="emailinput" Keyboard="Email" Text="{Binding LoginDetails.emailAddress}" ReturnType="Next"/>
                     </inputlayout:SfTextInputLayout>
                     <Label Text="{Binding LoginDetails.emailAddressError}" Style="{StaticResource ErrorLabel}"/>
 
                 </StackLayout>
 
                 <!-- Phone Number Input (Visible when Patient is selected) -->
-                <StackLayout Spacing="0" IsVisible="{Binding IsPhoneNumberVisible}">
+                <StackLayout Spacing="0" x:Name="PatientTextBox"  IsVisible="False">
                     <inputlayout:SfTextInputLayout Hint="Phone Number">
-                        <Entry HeightRequest="30" Text="{Binding LoginDetails.phoneNumber}" ReturnType="Next"/>
+                        <Entry HeightRequest="30" x:Name="phoneinput" Text="{Binding LoginDetails.phoneNumber}" ReturnType="Next"/>
                     </inputlayout:SfTextInputLayout>
                     <Label Text="{Binding LoginDetails.phoneNumberError}" Style="{StaticResource ErrorLabel}"/>
 
