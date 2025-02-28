@@ -26,13 +26,14 @@ public partial class CreateEvent : ContentPage
     }
     private void Calendar_FooterOkClicked(object sender, Syncfusion.Maui.Calendar.CalendarSubmittedEventArgs args)
     {
-        if (args.Value is Syncfusion.Maui.Calendar.CalendarDateRange dateRange)
+        if (args.Value is CalendarDateRange dateRange)
         {
             DateTime? startDate = dateRange.StartDate;
             DateTime? endDate = dateRange.EndDate != null ? dateRange.EndDate : dateRange.StartDate;
             calendar.IsVisible = false;
             calendar.IsOpen = false;
-            dateEntry.Text = dateRange.EndDate != null && dateRange.EndDate.HasValue ? $"{startDate.Value.ToString("MM-dd-yyyy")} - {endDate.Value.ToString("MM-dd-yyyy")}" : startDate.Value.ToString("MM-dd-yyyy"); // Display selected range in Entry
+            dateEntry.Text = dateRange.EndDate != null && dateRange.EndDate.HasValue ? $"{startDate.Value.ToString("MMM dd")}  -  {endDate.Value.ToString("MMM dd")}" : startDate.Value.ToString("MMM dd"); // Display selected range in Entry
+            _eventVM.SessionDateFormate = dateRange.EndDate != null && dateRange.EndDate.HasValue ? $"{startDate.Value.ToString("MM-dd-yyyy")}  -  {endDate.Value.ToString("MM-dd-yyyy")}" : startDate.Value.ToString("MM-dd-yyyy");
         }
     }
     private void OnOpenFTimePickerClicked(object sender, EventArgs e)

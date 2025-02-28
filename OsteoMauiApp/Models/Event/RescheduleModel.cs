@@ -1,4 +1,5 @@
-﻿using OsteoMAUIApp.ViewModels;
+﻿using Newtonsoft.Json;
+using OsteoMAUIApp.ViewModels;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace OsteoMAUIApp.Models.Event
 {
    public class RescheduleModel: BaseViewModel
     {
-        public int _patientType = 1;
-        public int patientType
+        public string _patientType;
+        public string patientType
         {
             get { return _patientType; }
             set
@@ -23,7 +24,7 @@ namespace OsteoMAUIApp.Models.Event
         public string _sessionDay;
         public string sessionDay
         {
-            get { return this._sessionDay; }
+            get => _sessionDay;
             set
             {
                 if (this._sessionDay != value)
@@ -37,10 +38,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string sessionDayError
         {
-            get
-            {
-                return this._sessionDayError;
-            }
+            get => _sessionDayError;
 
             set
             {
@@ -55,7 +53,7 @@ namespace OsteoMAUIApp.Models.Event
         public bool _isScheduleEnable;
         public bool isScheduleEnable
         {
-            get { return this._isScheduleEnable; }
+            get => _isScheduleEnable;
             set
             {
                 if (this._isScheduleEnable != value)
@@ -68,20 +66,34 @@ namespace OsteoMAUIApp.Models.Event
         public TreatmentLengthModel _treatmentLength;
         public TreatmentLengthModel treatmentLength
         {
-            get { return this._treatmentLength; }
+            get => _treatmentLength;
             set
             {
                 if (this._treatmentLength != value)
                 {
                     SetProperty(ref _treatmentLength, value);
+                    ValidateTreatmentLength();
                 }
             }
         }
-
-        public TimeSpan? _fTime;
-        public TimeSpan? fTime
+        private string _treatmentLengthError;
+        [Ignore]
+        public string treatmentLengthError
         {
-            get { return this._fTime; }
+            get => _treatmentLengthError;
+
+            set
+            {
+                if (this._treatmentLengthError != value)
+                {
+                    SetProperty(ref _treatmentLengthError, value);
+                }
+            }
+        }
+        public string _fTime;
+        public string fTime
+        {
+            get => _fTime;
             set
             {
                 if (this._fTime != value)
@@ -95,10 +107,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string fTimeError
         {
-            get
-            {
-                return this._fTimeError;
-            }
+            get => _fTimeError;
 
             set
             {
@@ -109,10 +118,10 @@ namespace OsteoMAUIApp.Models.Event
             }
         }
 
-        public TimeSpan? _tTime;
-        public TimeSpan? tTime
+        public string _tTime;
+        public string tTime
         {
-            get { return this._tTime; }
+            get => _tTime;
             set
             {
                 if (this._tTime != value)
@@ -126,10 +135,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string tTimeError
         {
-            get
-            {
-                return this._tTimeError;
-            }
+            get => _tTimeError;
 
             set
             {
@@ -139,6 +145,7 @@ namespace OsteoMAUIApp.Models.Event
                 }
             }
         }
+
         #region|event model validations|
 
         //User field validations for event
@@ -149,9 +156,10 @@ namespace OsteoMAUIApp.Models.Event
                 ValidateSessionDay();
                 ValidateFromTime();
                 ValidateToTime();
+                ValidateTreatmentLength();
             });
             if (string.IsNullOrEmpty(sessionDayError) || string.IsNullOrEmpty(fTimeError)
-                || string.IsNullOrEmpty(tTimeError))
+                || string.IsNullOrEmpty(tTimeError) || string.IsNullOrEmpty(treatmentLengthError))
             {
                 return true;
             }
@@ -190,6 +198,36 @@ namespace OsteoMAUIApp.Models.Event
                 tTimeError = "";
             }
         }
+        private void ValidateTreatmentLength()
+        {
+            if (treatmentLength == null)
+            {
+                treatmentLengthError = "Appointment length is required";
+            }
+            else
+            {
+                treatmentLengthError = "";
+            }
+        }
+        #region |Serialization for submission|
+
+        public string SerializeRescheduleEventFields()
+        {
+            var data = new Dictionary<string, object>
+            {
+                { "patientType", patientType },
+                { "sessionDay", sessionDay },
+                { "fromDateStr", fromDateStr },
+                { "toDateStr", toDateStr },
+                { "fTime", fTime },
+                { "tTime", tTime},
+                { "isScheduleEnable", isScheduleEnable },
+                { "treatmentLength", treatmentLength?.Minuts ?? 0}
+            };
+
+            return JsonConvert.SerializeObject(data, Formatting.Indented);
+        }
+        #endregion
         #endregion
     }
 }

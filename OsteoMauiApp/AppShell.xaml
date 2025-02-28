@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:OsteoMAUIApp"
     xmlns:profile="clr-namespace:OsteoMAUIApp.Views.ProfileSettings"
+    xmlns:event="clr-namespace:OsteoMAUIApp.Views.Event"
     Shell.FlyoutBehavior="Disabled"
     Title="OsteoMAUIApp">
 
@@ -13,8 +14,12 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
-    <ShellContent
+    <!--<ShellContent
     Title="Profile Settings"
     ContentTemplate="{DataTemplate profile:ProfileIndex}"
-    Route="ProfileIndex" />
+    Route="ProfileIndex" />-->
+    <ShellContent
+        Title="MyEvents"
+        ContentTemplate="{DataTemplate event:MyEvents}"
+        Route="MyEvents" />
 </Shell>

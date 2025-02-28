@@ -1,4 +1,6 @@
-﻿using OsteoMAUIApp.ViewModels;
+﻿using Newtonsoft.Json;
+using OsteoMAUIApp.Models.Common;
+using OsteoMAUIApp.ViewModels;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace OsteoMAUIApp.Models.Event
 
         public string _title;
         public string title {
-            get { return this._title; }
+            get => _title;
             set {
                 if (this._title != value)
                 {
@@ -28,10 +30,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string titleError
         {
-            get
-            {
-                return this._titleError;
-            }
+            get => _titleError;
 
             set
             {
@@ -45,7 +44,7 @@ namespace OsteoMAUIApp.Models.Event
         public string _sessionDay;
         public string sessionDay
         {
-            get { return this._sessionDay; }
+            get => _sessionDay;
             set
             {
                 if (this._sessionDay != value)
@@ -59,10 +58,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string sessionDayError
         {
-            get
-            {
-                return this._sessionDayError;
-            }
+            get => _sessionDayError;
 
             set
             {
@@ -75,7 +71,7 @@ namespace OsteoMAUIApp.Models.Event
 
         public string _location;
         public string location {
-            get { return this._location; }
+            get => _location;
             set {
                 if (this._location != value)
                 {
@@ -88,11 +84,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string locationError
         {
-            get
-            {
-                return this._locationError;
-            }
-
+            get => _locationError;
             set
             {
                 if (this._locationError != value)
@@ -101,14 +93,14 @@ namespace OsteoMAUIApp.Models.Event
                 }
             }
         }
-        public double? latitude { get; set; }
-        public double? longitude { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
         public string fromDateStr { get; set; }
         public string toDateStr { get; set; }
         public bool _isScheduleEnable;
         public bool isScheduleEnable
         {
-            get { return this._isScheduleEnable; }
+            get => _isScheduleEnable;
             set
             {
                 if (this._isScheduleEnable != value)
@@ -121,7 +113,7 @@ namespace OsteoMAUIApp.Models.Event
         public TreatmentLengthModel _treatmentLength;
         public TreatmentLengthModel treatmentLength
         {
-            get { return this._treatmentLength; }
+            get => _treatmentLength;
             set
             {
                 if (this._treatmentLength != value)
@@ -135,10 +127,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string treatmentLengthError
         {
-            get
-            {
-                return this._treatmentLengthError;
-            }
+            get => _treatmentLengthError;
 
             set
             {
@@ -148,10 +137,10 @@ namespace OsteoMAUIApp.Models.Event
                 }
             }
         }
-        public TimeSpan? _fTime;
-        public TimeSpan? fTime
+        public string _fTime;
+        public string fTime
         {
-            get { return this._fTime;}
+            get => _fTime;
             set
             {
                 if (this._fTime != value)
@@ -165,10 +154,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string fTimeError
         {
-            get
-            {
-                return this._fTimeError;
-            }
+            get => _fTimeError;
 
             set
             {
@@ -179,10 +165,10 @@ namespace OsteoMAUIApp.Models.Event
             }
         }
 
-        public TimeSpan? _tTime;
-        public TimeSpan? tTime
+        public string _tTime;
+        public string tTime
         {
-            get { return this._tTime; }
+            get => _tTime;
             set
             {
                 if (this._tTime != value)
@@ -196,10 +182,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string tTimeError
         {
-            get
-            {
-                return this._tTimeError;
-            }
+            get => _tTimeError;
 
             set
             {
@@ -210,10 +193,10 @@ namespace OsteoMAUIApp.Models.Event
             }
         }
 
-        public decimal? _reminder;
-        public decimal? reminder
+        public ReminderOptions _reminder;
+        public ReminderOptions reminder
         {
-            get { return this._reminder; }
+            get => _reminder;
             set
             {
                 if (this._reminder != value)
@@ -227,10 +210,7 @@ namespace OsteoMAUIApp.Models.Event
         [Ignore]
         public string reminderError
         {
-            get
-            {
-                return this._reminderError;
-            }
+            get => _reminderError;
 
             set
             {
@@ -244,7 +224,7 @@ namespace OsteoMAUIApp.Models.Event
         public string _privacy = "1";
         public string privacy
         {
-            get { return this._privacy; }
+            get => _privacy;
             set
             {
                 this._privacy = value;
@@ -255,18 +235,43 @@ namespace OsteoMAUIApp.Models.Event
         public string _patientType= "1";
         public string patientType
         {
-            get { return _patientType; }
+            get => _patientType;
             set
             {
                 _patientType = value;
                 SetProperty(ref _patientType, value);
             }
         }
-        public int? adults { get; set; }
-        public int? kids { get; set; }
-        public List<int> userGroupIds { get; set; }
-        public List<int> patientIds { get; set; }
-        public List<int> practitionerIds { get; set; }
+        public int adults { get; set; }
+        public int kids { get; set; }
+
+        private List<DropdownListModel> _userGroupIds=new();
+
+        public List<DropdownListModel> userGroupIds
+        {
+            get => _userGroupIds;
+            set {
+                _userGroupIds = value;
+                SetProperty(ref _userGroupIds, value);
+            }
+        }
+
+        private ObservableCollection<DropdownListModel> _patientIds = new();
+
+        public ObservableCollection<DropdownListModel> patientIds
+        {
+            get => _patientIds;
+            set => SetProperty(ref _patientIds, value);
+        }
+
+        private List<DropdownListModel> _practitionerIds;
+
+        public List<DropdownListModel> practitionerIds
+        {
+            get => _practitionerIds;
+            set => SetProperty(ref _practitionerIds, value);
+        }
+
         #region|event model validations|
 
         //User field validations for event
@@ -326,7 +331,7 @@ namespace OsteoMAUIApp.Models.Event
         }
         private void ValidateFromTime()
         {
-            if (fTime == null)
+            if (string.IsNullOrEmpty(fTime))
             {
                 fTimeError = "From time is required";
             }
@@ -337,7 +342,7 @@ namespace OsteoMAUIApp.Models.Event
         }
         private void ValidateToTime()
         {
-            if (tTime == null)
+            if (string.IsNullOrEmpty(tTime))
             {
                 tTimeError = "To time is required";
             }
@@ -367,6 +372,37 @@ namespace OsteoMAUIApp.Models.Event
             {
                 treatmentLengthError = "";
             }
+        }
+        #endregion
+        #region |Serialization for submission|
+
+        public string SerializeCreateEventFields()
+        {
+            var data = new Dictionary<string, object>
+            {
+                { "title", title },
+                { "patientType", patientType },
+                { "sessionDay", sessionDay },
+                { "fromDateStr", fromDateStr },
+                { "toDateStr", toDateStr },
+                { "fTime", fTime },
+                { "tTime", tTime},
+                { "isScheduleEnable", isScheduleEnable },
+                { "treatmentLength", treatmentLength?.Minuts ?? 0},
+                { "privacy", privacy },
+                { "location", "Gujranwala, punjab, pakistan" },
+                { "latitude", 31.029933 },
+                { "longitude", 71.930011 },
+                { "practitionerIds",practitionerIds?.Select(x => x.Id).ToArray() ?? Array.Empty<int>()},
+                { "adults", adults },
+                { "kids", kids },
+                { "userGroupIds", userGroupIds?.Select(x => x.Id).ToArray() ?? Array.Empty<int>() },
+                { "patientIds", patientIds?.Select(x => x.Id).ToArray() ?? Array.Empty<int>() },
+                { "emailInvite", false },
+                { "reminder", reminder?.Value ?? 0 },
+            };
+
+            return JsonConvert.SerializeObject(data, Formatting.Indented);
         }
         #endregion
     }

@@ -9,7 +9,7 @@ xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.
             <listview:SfListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
-                        <Frame x:Name="frame" CornerRadius="10" Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
                             <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -55,7 +55,7 @@ xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.
                                 </HorizontalStackLayout>
 
                             </Grid>
-                        </Frame>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </listview:SfListView.ItemTemplate>

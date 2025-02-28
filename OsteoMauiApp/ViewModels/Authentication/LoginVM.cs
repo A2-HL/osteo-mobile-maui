@@ -22,59 +22,59 @@ namespace OsteoMAUIApp.ViewModels.Authentication
     {
         private readonly IAuthenticationService _authService;
 
-        private int _selectedUserType = 2; // Default to Practitioner
-        private bool _isEmailVisible = true;
-        private bool _isPhoneNumberVisible = false;
+        //private int _selectedUserType = 2; // Default to Practitioner
+        //private bool _isEmailVisible = true;
+        //private bool _isPhoneNumberVisible = false;
 
-        public int SelectedUserType
-        {
-            get => _selectedUserType;
-            set
-            {
-                _selectedUserType = value;
-                Debug.WriteLine($"SelectedUserType set to: {value}");
-                OnPropertyChanged(nameof(SelectedUserType));
-                UpdateInputVisibility();
-            }
-        }
+        public int SelectedUserType { get; set; } = 2;
+        //{
+        //    get => _selectedUserType;
+        //    set
+        //    {
+        //        _selectedUserType = value;
+        //        Debug.WriteLine($"SelectedUserType set to: {value}");
+        //        OnPropertyChanged(nameof(SelectedUserType));
+        //        UpdateInputVisibility();
+        //    }
+        //}
 
-        public bool IsEmailVisible
-        {
-            get => _isEmailVisible;
-            set
-            {
-                _isEmailVisible = value;
-                Debug.WriteLine($"IsEmailVisible set to: {value}");
-                OnPropertyChanged(nameof(IsEmailVisible));
-            }
-        }
+        //public bool IsEmailVisible
+        //{
+        //    get => _isEmailVisible;
+        //    set
+        //    {
+        //        _isEmailVisible = value;
+        //        Debug.WriteLine($"IsEmailVisible set to: {value}");
+        //        OnPropertyChanged(nameof(IsEmailVisible));
+        //    }
+        //}
 
-        public bool IsPhoneNumberVisible
-        {
-            get => _isPhoneNumberVisible;
-            set
-            {
-                _isPhoneNumberVisible = value;
-                Debug.WriteLine($"IsPhoneNumberVisible set to: {value}");
-                OnPropertyChanged(nameof(IsPhoneNumberVisible));
-            }
-        }
+        //public bool IsPhoneNumberVisible
+        //{
+        //    get => _isPhoneNumberVisible;
+        //    set
+        //    {
+        //        _isPhoneNumberVisible = value;
+        //        Debug.WriteLine($"IsPhoneNumberVisible set to: {value}");
+        //        OnPropertyChanged(nameof(IsPhoneNumberVisible));
+        //    }
+        //}
 
-        public ICommand SelectUserTypeCommand { get; }
+        //public ICommand SelectUserTypeCommand { get; }
 
 
 
-        private void OnSelectUserType(int userType)
-        {
-            Debug.WriteLine($"User type selected: {userType}");
-            SelectedUserType = userType;
-        }
+        //private void OnSelectUserType(int userType)
+        //{
+        //    Debug.WriteLine($"User type selected: {userType}");
+        //    SelectedUserType = userType;
+        //}
 
-        private void UpdateInputVisibility()
-        {
-            IsEmailVisible = SelectedUserType == 2; // Show email for Practitioner
-            IsPhoneNumberVisible = SelectedUserType == 1; // Show phone number for Patient
-        }
+        //private void UpdateInputVisibility()
+        //{
+        //    IsEmailVisible = SelectedUserType == 2; // Show email for Practitioner
+        //    IsPhoneNumberVisible = SelectedUserType == 1; // Show phone number for Patient
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -97,7 +97,7 @@ namespace OsteoMAUIApp.ViewModels.Authentication
             InitializeCommand = new Command(Initialize);
             SignupCommand = new Command(SignupClicked);
 
-            SelectUserTypeCommand = new Command<int>(OnSelectUserType);
+            //SelectUserTypeCommand = new Command<int>(OnSelectUserType);
         }
         #region |Private|
         bool isSessionChecking = true;

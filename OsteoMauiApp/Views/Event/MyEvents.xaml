@@ -15,7 +15,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                             <listview:SfListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
-                                        <Frame x:Name="frame" CornerRadius="10" Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
                                             <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
@@ -61,7 +61,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 </HorizontalStackLayout>
 
                                             </Grid>
-                                        </Frame>
+                                        </Border>
                                     </Grid>
                                 </DataTemplate>
                             </listview:SfListView.ItemTemplate>
@@ -75,7 +75,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                             <listview:SfListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
-                                        <Frame x:Name="frame" CornerRadius="10" Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
                                             <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
@@ -121,7 +121,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 </HorizontalStackLayout>
 
                                             </Grid>
-                                        </Frame>
+                                        </Border>
                                     </Grid>
                                 </DataTemplate>
                             </listview:SfListView.ItemTemplate>
@@ -135,7 +135,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                             <listview:SfListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
-                                        <Frame x:Name="frame" CornerRadius="10" Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
                                             <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
@@ -181,7 +181,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 </HorizontalStackLayout>
 
                                             </Grid>
-                                        </Frame>
+                                        </Border>
                                     </Grid>
                                 </DataTemplate>
                             </listview:SfListView.ItemTemplate>

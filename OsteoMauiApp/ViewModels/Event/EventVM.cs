@@ -1,5 +1,8 @@
-﻿using OsteoMAUIApp.Models.Common;
+﻿using OsteoMAUIApp.Helpers;
+using OsteoMAUIApp.Models.Common;
 using OsteoMAUIApp.Models.Event;
+using OsteoMAUIApp.Services.Implementations;
+using OsteoMAUIApp.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,9 +14,11 @@ namespace OsteoMAUIApp.ViewModels.Event
 {
     public class EventVM: BaseViewModel
     {
+        private readonly IEventService _eventService;
         public EventVM(INavigation navigation)
         {
             _navigation = navigation;
+            _eventService = new EventService(new RequestProvider());
             Event = new EventModel();
             Reschedule = new RescheduleModel();
             TreatmentLengthOptions = new List<TreatmentLengthModel>
@@ -38,6 +43,8 @@ namespace OsteoMAUIApp.ViewModels.Event
         INavigation _navigation;
         EventModel _event;
         RescheduleModel _rescheduleModel;
+        public string SessionDateFormate { get; set; }
+        public string RescheduleDateFormate { get; set; }
         #endregion
 
         #region |Public|
@@ -139,35 +146,111 @@ namespace OsteoMAUIApp.ViewModels.Event
         private async void CreateEventClicked(object obj)
         {
             if (IsBusy) return;
+
             if (await Event.ValidateModelForAddEvent())
             {
-                IsBusy = true;
+                StartBusyIndicator();
                 await Task.Delay(500);
                 try
                 {
+                    if (!string.IsNullOrEmpty(SessionDateFormate) && SessionDateFormate.Contains(" - "))
+                    {
+                        var splitdDate = SessionDateFormate.Split(" - ");
+                        Event.fromDateStr = splitdDate[0];
+                        Event.toDateStr = splitdDate[1];
+                    }
+                    else {
+                        Event.fromDateStr = SessionDateFormate;
+                        Event.toDateStr = SessionDateFormate;
+                    }
+                    var res = await _eventService.CreateAsync(Event);
+                    if (res != null)
+                    {
+                        if (res.statusCode == 200 || res.statusCode == 201)
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Success", res.statusMessage, "OK");
+                            await _navigation.PopModalAsync();
+                        }
+                        else if (res.statusCode == 401 || res.statusCode == 402 || res.statusCode == 404)
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", res.statusMessage, "OK");
+                        }
+                        else if (res.statusCode == 503)
+                        {
+                            Utility.ShowToastMessage(res.statusMessage, Utility.ToastDuration.Long);
+                        }
+                        else
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                        }
+                    }
+                    else
+                    {
+                        await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoSignupMessage, "OK");
+                    }
                 }
                 catch (System.Exception ex)
                 {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
                 }
             }
-            IsBusy = false;
+            StopBusyIndicator();
+
         }
 
         private async void RescheduleEventClicked(object obj)
         {
             if (IsBusy) return;
+
             if (await Reschedule.ValidateModelForRescheudleEvent())
             {
-                IsBusy = true;
+                StartBusyIndicator();
                 await Task.Delay(500);
                 try
                 {
+                    if (!string.IsNullOrEmpty(RescheduleDateFormate) && RescheduleDateFormate.Contains(" - "))
+                    {
+                        var splitdDate = RescheduleDateFormate.Split(" - ");
+                        Reschedule.fromDateStr = splitdDate[0];
+                        Reschedule.toDateStr = splitdDate[1];
+                    }
+                    else
+                    {
+                        Reschedule.fromDateStr = RescheduleDateFormate;
+                        Reschedule.toDateStr = RescheduleDateFormate;
+                    }
+                    var res = await _eventService.RescheduleEventAsync(Reschedule);
+                    if (res != null)
+                    {
+                        if (res.statusCode == 200 || res.statusCode == 201)
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Success", res.statusMessage, "OK");
+                            await _navigation.PopModalAsync();
+                        }
+                        else if (res.statusCode == 401 || res.statusCode == 402 || res.statusCode == 404)
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", res.statusMessage, "OK");
+                        }
+                        else if (res.statusCode == 503)
+                        {
+                            Utility.ShowToastMessage(res.statusMessage, Utility.ToastDuration.Long);
+                        }
+                        else
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                        }
+                    }
+                    else
+                    {
+                        await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoSignupMessage, "OK");
+                    }
                 }
                 catch (System.Exception ex)
                 {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
                 }
             }
-            IsBusy = false;
+            StopBusyIndicator();
         }
         #endregion
     }

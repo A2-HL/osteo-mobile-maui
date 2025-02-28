@@ -67,7 +67,7 @@
                                 </Entry.GestureRecognizers>
                             </Entry>
                             <Label Text="{Binding Event.fTimeError}" Style="{StaticResource ErrorLabel}" />
-                            <picker:SfTimePicker x:Name="fromtimePicker" Mode="Dialog" OkButtonClicked="OnTimeFPickerOkButtonClicked" Format="HH_mm" MinuteInterval="15"  SelectedTime="{Binding Event.fTime}" HorizontalOptions="Start" IsVisible="False">
+                            <picker:SfTimePicker x:Name="fromtimePicker" Mode="Dialog" OkButtonClicked="OnTimeFPickerOkButtonClicked" Format="HH_mm" MinuteInterval="15"  HorizontalOptions="Start" IsVisible="False">
                                 <picker:SfTimePicker.FooterView>
                                     <picker:PickerFooterView Height="40" OkButtonText="Save" CancelButtonText="Exit"/>
                                 </picker:SfTimePicker.FooterView>
@@ -82,7 +82,7 @@
                                 </Entry.GestureRecognizers>
                             </Entry>
                             <Label Text="{Binding Event.tTimeError}" Style="{StaticResource ErrorLabel}" />
-                            <picker:SfTimePicker x:Name="totimePicker" Mode="Dialog" OkButtonClicked="OnTimeTPickerOkButtonClicked" Format="HH_mm" MinuteInterval="15"  SelectedTime="{Binding Event.tTime}" HorizontalOptions="Start" IsVisible="False">
+                            <picker:SfTimePicker x:Name="totimePicker" Mode="Dialog" OkButtonClicked="OnTimeTPickerOkButtonClicked" Format="HH_mm" MinuteInterval="15"  HorizontalOptions="Start" IsVisible="False">
                                 <picker:SfTimePicker.FooterView>
                                     <picker:PickerFooterView Height="40" OkButtonText="Save" CancelButtonText="Exit"/>
                                 </picker:SfTimePicker.FooterView>
@@ -146,7 +146,7 @@
                     <inputs:SfComboBox x:Name="PractitionerComboBox" 
                    DisplayMemberPath="Name"
                    ItemsSource="{Binding PractitionerList}" 
-                   SelectedItem="{Binding practitionerIds}"
+                   SelectedItem="{Binding Event.practitionerIds}"
                    NoResultsFoundText="Practitioner not found."
                    SelectionMode="Multiple"
                    IsEditable="True"
@@ -157,14 +157,15 @@
                     <inputs:SfComboBox x:Name="PatientGroupComboBox" 
                                DisplayMemberPath="Name"
                                ItemsSource="{Binding PatientGroupList}" 
-                               SelectedItems="{Binding Event.userGroupIds}"/>
+                               SelectionMode="Multiple"        
+                               SelectedItems="{Binding Event.userGroupIds,Mode=TwoWay}"/>
                 </StackLayout>
                 <StackLayout Spacing="0" Margin="0,0,0,10">
                     <Label Text="Add Patient" FontSize="14" TextColor="Gray"/>
                     <inputs:SfComboBox x:Name="PatientComboBox" 
                    DisplayMemberPath="Name"
                    ItemsSource="{Binding PatientList}" 
-                   SelectedItem="{Binding patientIds}"
+                   SelectedItem="{Binding Event.patientIds,Mode=TwoWay}"
                    SelectionMode="Multiple"
                    IsEditable="True"
                    Text="{Binding SearchPatient, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
