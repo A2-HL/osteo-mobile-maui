@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             x:Class="OsteoMAUIApp.Views.Event.MyEvents"
+             Title="MyEvents">
+
+    <Grid Padding="4" BackgroundColor="#F0F0F0">
+        <tabview:SfTabView x:Name="tabView" TabBarBackground="#59D6B8" IndicatorPlacement="Bottom" IndicatorBackground="#fff" TabBarPlacement="Top" TabWidthMode="Default" HeaderHorizontalTextAlignment="Center">
+            <tabview:SfTabView.Items>
+                <tabview:SfTabItem Header="Upcomming" TextColor="#fff">
+                    <tabview:SfTabItem.Content>
+                        <listview:SfListView x:Name="upcomminglistView" AutoFitMode="DynamicHeight" ItemsSource="{Binding UpcommingEvents}">
+                            <listview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
+                                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                                            <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Grid.Row="0" Grid.Column="0" Padding="8,10,0,5" Orientation="Horizontal" VerticalOptions="Center">
+                                                    <Border Padding="0" Stroke="#D3D3D3"
+                     StrokeThickness="1"
+                     BackgroundColor="Transparent"
+                     WidthRequest="40"
+                     HeightRequest="40"
+                     StrokeShape="RoundRectangle 25">
+                                                        <Image Source="canada.png" Aspect="AspectFill" WidthRequest="40" HeightRequest="40" />
+                                                    </Border>
+                                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+                                                </StackLayout>
+                                                <!-- Date and Time -->
+                                                <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
+                                                    <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
+                                                </StackLayout>
+
+                                                <!-- Host Location -->
+                                                <StackLayout Grid.Row="1" Grid.Column="1" Padding="10">
+                                                    <Label Text="Host Location" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Location}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                </StackLayout>
+                                                <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                                                    <Label Text="Total Patients:" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="25,0,0,0" />
+                                                    <Label Text="{Binding TotalPatients}" VerticalOptions="Center" FontSize="13" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,0,0,0" />
+
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
+                                                    <BoxView WidthRequest="1" BackgroundColor="#fff"/>
+                                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                                    <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
+                                                </HorizontalStackLayout>
+
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </listview:SfListView.ItemTemplate>
+                        </listview:SfListView>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+
+                <tabview:SfTabItem Header="Completed" TextColor="#fff">
+                    <tabview:SfTabItem.Content>
+                        <listview:SfListView x:Name="completedlistView" AutoFitMode="DynamicHeight" ItemsSource="{Binding CompletedEvents}">
+                            <listview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
+                                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                                            <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Grid.Row="0" Grid.Column="0" Padding="8,10,0,5" Orientation="Horizontal" VerticalOptions="Center">
+                                                    <Border Padding="0" Stroke="#D3D3D3"
+                     StrokeThickness="1"
+                     BackgroundColor="Transparent"
+                     WidthRequest="40"
+                     HeightRequest="40"
+                     StrokeShape="RoundRectangle 25">
+                                                        <Image Source="canada.png" Aspect="AspectFill" WidthRequest="40" HeightRequest="40" />
+                                                    </Border>
+                                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+                                                </StackLayout>
+                                                <!-- Date and Time -->
+                                                <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
+                                                    <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
+                                                </StackLayout>
+
+                                                <!-- Host Location -->
+                                                <StackLayout Grid.Row="1" Grid.Column="1" Padding="10">
+                                                    <Label Text="Host Location" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Location}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                </StackLayout>
+                                                <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                                                    <Label Text="Total Patients:" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="25,0,0,0" />
+                                                    <Label Text="{Binding TotalPatients}" VerticalOptions="Center" FontSize="13" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,0,0,0" />
+
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
+                                                    <BoxView WidthRequest="1" BackgroundColor="#fff"/>
+                                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                                    <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
+                                                </HorizontalStackLayout>
+
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </listview:SfListView.ItemTemplate>
+                        </listview:SfListView>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+
+                <tabview:SfTabItem Header="Cancelled" TextColor="#fff">
+                    <tabview:SfTabItem.Content>
+                        <listview:SfListView x:Name="cancelledlistView" AutoFitMode="DynamicHeight" ItemsSource="{Binding CancelledEvents}">
+                            <listview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
+                                        <Border Padding="0,5,0,0" Margin="0" BackgroundColor="#fff">
+                                            <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Grid.Row="0" Grid.Column="0" Padding="8,10,0,5" Orientation="Horizontal" VerticalOptions="Center">
+                                                    <Border Padding="0" Stroke="#D3D3D3"
+                                                     StrokeThickness="1"
+                                                     BackgroundColor="Transparent"
+                                                     WidthRequest="40"
+                                                     HeightRequest="40"
+                                                     StrokeShape="RoundRectangle 25">
+                                                        <Image Source="canada.png" Aspect="AspectFill" WidthRequest="40" HeightRequest="40" />
+                                                    </Border>
+                                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+                                                </StackLayout>
+                                                <!-- Date and Time -->
+                                                <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
+                                                    <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
+                                                </StackLayout>
+
+                                                <!-- Host Location -->
+                                                <StackLayout Grid.Row="1" Grid.Column="1" Padding="10">
+                                                    <Label Text="Host Location" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Location}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                </StackLayout>
+                                                <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                                                    <Label Text="Total Patients:" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="25,0,0,0" />
+                                                    <Label Text="{Binding TotalPatients}" VerticalOptions="Center" FontSize="13" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,0,0,0" />
+
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
+                                                    <BoxView WidthRequest="1" BackgroundColor="#fff"/>
+                                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                                    <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
+                                                </HorizontalStackLayout>
+
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </listview:SfListView.ItemTemplate>
+                        </listview:SfListView>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+            </tabview:SfTabView.Items>
+        </tabview:SfTabView>
+       
+    </Grid>
+</ContentPage>
