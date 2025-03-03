@@ -117,7 +117,7 @@ namespace OsteoMAUIApp.Models.Authentication
         #region userType
 
         private int _userTypeId;
-        public int userTypeId
+        public int UserTypeId
         {
             get { return this._userTypeId; }
             set
@@ -156,13 +156,28 @@ namespace OsteoMAUIApp.Models.Authentication
 
         public async Task<bool> ValidateModelForForgotPassword()
         {
-            await Task.Run(() =>
+            if(UserTypeId>0 && UserTypeId == 2)
             {
-                ValidateEmail();
-            });
-            if (string.IsNullOrEmpty(emailAddressError))
+                await Task.Run(() =>
+                {
+                    ValidateEmail();
+                });
+                if (string.IsNullOrEmpty(emailAddressError))
+                {
+                    return true;
+                }
+            }
+            else
             {
-                return true;
+                await Task.Run(() =>
+                {
+                    ValidatePhoneNumber();
+                });
+                if (string.IsNullOrEmpty(phoneNumberError))
+                {
+                    return true;
+                }
+
             }
             return false;
         }
@@ -209,7 +224,7 @@ namespace OsteoMAUIApp.Models.Authentication
                 { "email", emailAddress },
                 { "phoneNumber", phoneNumber },
                 { "password", currentPassword },
-                { "userTypeId", userTypeId },
+                { "userTypeId", UserTypeId },
                 { "deviceToken", fcmToken }
             };
 

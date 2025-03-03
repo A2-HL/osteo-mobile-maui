@@ -8,57 +8,53 @@
         <ScrollView>
             <Grid Padding="20">
                 <StackLayout Spacing="10">
-                    <!-- Welcome Message -->
+                   
                     <StackLayout Spacing="0">
                         <Label FontSize="25" FontAttributes="Bold" Text="Let's Register an Account!" />
                         <Label FontSize="15" Text="Hello user, start your journey!" FontAttributes="Bold" />
                     </StackLayout>
 
-                    <StackLayout Margin="0,30,0,0" Spacing="20" Orientation="Horizontal">
+                    <StackLayout Margin="0,30,0,0" Spacing="20" Orientation="Horizontal" >
                         <!-- Practitioner Selection -->
-                        <Frame Padding="10"
-                               BorderColor="{Binding SelectedUserType, Converter={StaticResource SelectedBorderConverter}, ConverterParameter=2}"
-                               CornerRadius="10" HorizontalOptions="FillAndExpand">
+                        <Border Padding="10" x:Name="PractitionerFrame" Stroke="#00d9bc" HorizontalOptions="FillAndExpand">
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                <Image Source="practitioner.png" WidthRequest="40" HeightRequest="40"/>
-                                <Label Text="Practitioner" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                                <Image Source="practitioner.png" Style="{StaticResource SelectUserTypeImage}"/>
+                                <Label Text="Practitioner" Style="{StaticResource SelectUserTypeLabel}" />
                             </StackLayout>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="2"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFrameTappedPractitioner"/>
+                            </Border.GestureRecognizers>
+                        </Border>
 
                         <!-- Patient Selection -->
-                        <Frame Padding="10"
-                               BorderColor="{Binding SelectedUserType, Converter={StaticResource SelectedBorderConverter}, ConverterParameter=1}"
-                               CornerRadius="10" HorizontalOptions="FillAndExpand">
+                        <Border Padding="10" x:Name="PatientFrame" Stroke="Transparent" HorizontalOptions="FillAndExpand">
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                <Image Source="patient.png" WidthRequest="40" HeightRequest="40"/>
-                                <Label Text="Patient" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                                <Image Source="patient.png" Style="{StaticResource SelectUserTypeImage}"/>
+                                <Label Text="Patient" Style="{StaticResource SelectUserTypeLabel}" />
                             </StackLayout>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SelectUserTypeCommand}" CommandParameter="1"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFrameTappedPatient"/>
+                            </Border.GestureRecognizers>
+                        </Border>
                     </StackLayout>
 
                     <!-- User Input Fields -->
                     <StackLayout Spacing="10">
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="First Name" HeightRequest="80">
-                                <Entry Text="{Binding SignupDetails.FirstName}" />
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding SignupDetails.FirstName}" />
                             </core:SfTextInputLayout>
-                            <Label Text="{Binding SignupDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
+                            <Label Text="{Binding SignupDetails.FirstNameError}" Style="{StaticResource ErrorLabel}"/>
                         </StackLayout>
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="Last Name" HeightRequest="80">
-                                <Entry Text="{Binding SignupDetails.LastName}" />
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding SignupDetails.LastName}" />
                             </core:SfTextInputLayout>
-                            <Label Text="{Binding SignupDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
+                            <Label Text="{Binding SignupDetails.LastNameError}" Style="{StaticResource ErrorLabel}"/>
                         </StackLayout>
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="Email" HeightRequest="80">
-                                <Entry Text="{Binding Email}" Keyboard="Email">
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding Email}" Keyboard="Email">
                                     <!--<Entry.Behaviors>
                                         <core:EmailValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" />
                                     </Entry.Behaviors>-->
@@ -67,35 +63,35 @@
                         </StackLayout>
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="Phone Number" HeightRequest="80">
-                                <Entry Text="{Binding SignupDetails.PhoneNumber}" Keyboard="Telephone" />
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding SignupDetails.PhoneNumber}" Keyboard="Telephone" />
                             </core:SfTextInputLayout>
-                            <Label Text="{Binding SignupDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
+                            <Label Text="{Binding SignupDetails.PhoneNumberError}" Style="{StaticResource ErrorLabel}"/>
 
                         </StackLayout>
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="My Home Address" HeightRequest="80">
-                                <Entry Text="{Binding SignupDetails.HomeAddress}" />
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding SignupDetails.HomeAddress}" />
                             </core:SfTextInputLayout>
                             <Label Text="{Binding SignupDetails.HomeAddressError}" Style="{StaticResource ErrorLabel}"/>
 
                         </StackLayout>
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="Password" HeightRequest="80">
-                                <Entry Text="{Binding SignupDetails.Password}" IsPassword="True" />
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding SignupDetails.Password}" IsPassword="True" />
                             </core:SfTextInputLayout>
-                            <Label Text="{Binding SignupDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
+                            <Label Text="{Binding SignupDetails.PasswordError}" Style="{StaticResource ErrorLabel}"/>
 
                         </StackLayout>
                         <StackLayout Spacing="0">
                             <core:SfTextInputLayout Hint="Confirm Password" HeightRequest="80">
-                                <Entry Text="{Binding SignupDetails.ConfirmPassword}" IsPassword="True" />
+                                <Entry Style="{StaticResource InputEntry}" Text="{Binding SignupDetails.ConfirmPassword}" IsPassword="True" />
                             </core:SfTextInputLayout>
-                            <Label Text="{Binding SignupDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
+                            <Label Text="{Binding SignupDetails.ConfirmPasswordError}" Style="{StaticResource ErrorLabel}"/>
                         </StackLayout>
                     </StackLayout>
 
                     <!-- Sign-Up Button -->
-                    <Button Text="Sign Up" Clicked="OnSignupSubmitClicked" BackgroundColor="#00d9bc" TextColor="White" FontAttributes="Bold" />
+                    <Button Text="Sign Up" Clicked="OnSignupSubmitClicked"  Style="{StaticResource SubmitButton}" />
 
                     <!-- Already Have an Account? -->
                     <StackLayout Margin="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center" Spacing="0">

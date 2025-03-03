@@ -12,9 +12,8 @@ namespace OsteoMAUIApp.Services.Interfaces
     {
         Task<LoginResponseModel> LoginAsync(LoginModel credentials);
         Task<ResponseStatusModel> SignupAsync(SignUpModel signupModel);
-       // Task<ResponseStatusModel> ForgotPasswordAsync(LoginModel credentials);
+        Task<ResponseStatusModel> ForgotPasswordAsync(LoginModel credentials);
         Task<LoginResponseModel> RefreshAccessToken(string refreshToken, string userId);
-        Task<bool> LogoutAsync();
-        //Task<ResponseStatusModel> ResendVerificationEmail(string emailAddress);
+        Task<ResponseStatusModel> ResendVerificationEmail(string emailAddress);
     }
 }
