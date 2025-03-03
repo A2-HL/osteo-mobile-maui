@@ -381,7 +381,7 @@ namespace OsteoMAUIApp.Models.Event
             var data = new Dictionary<string, object>
             {
                 { "title", title },
-                { "patientType", patientType },
+                { "patientType", Convert.ToInt32(patientType) },
                 { "sessionDay", sessionDay },
                 { "fromDateStr", fromDateStr },
                 { "toDateStr", toDateStr },
@@ -389,7 +389,7 @@ namespace OsteoMAUIApp.Models.Event
                 { "tTime", tTime},
                 { "isScheduleEnable", isScheduleEnable },
                 { "treatmentLength", treatmentLength?.Minuts ?? 0},
-                { "privacy", privacy },
+                { "privacy", Convert.ToInt32(privacy) },
                 { "location", "Gujranwala, punjab, pakistan" },
                 { "latitude", 31.029933 },
                 { "longitude", 71.930011 },

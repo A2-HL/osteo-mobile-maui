@@ -6,12 +6,12 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
              x:Class="OsteoMAUIApp.Views.Event.MyEvents"
              Title="MyEvents">
 
-    <Grid Padding="4" BackgroundColor="#F0F0F0">
+    <Grid Padding="4,4,4,0" BackgroundColor="#F0F0F0">
         <tabview:SfTabView x:Name="tabView" TabBarBackground="#59D6B8" IndicatorPlacement="Bottom" IndicatorBackground="#fff" TabBarPlacement="Top" TabWidthMode="Default" HeaderHorizontalTextAlignment="Center">
             <tabview:SfTabView.Items>
                 <tabview:SfTabItem Header="Upcomming" TextColor="#fff">
                     <tabview:SfTabItem.Content>
-                        <listview:SfListView x:Name="upcomminglistView" AutoFitMode="DynamicHeight" ItemsSource="{Binding UpcommingEvents}">
+                        <listview:SfListView x:Name="upcomminglistView" AutoFitMode="DynamicHeight" ItemsSource="{Binding UpcommingEvents}" ItemTapped="SfListView_ItemTapped">
                             <listview:SfListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
@@ -40,7 +40,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 <!-- Date and Time -->
                                                 <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
                                                     <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
-                                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding SessionDay}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
                                                     <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
                                                 </StackLayout>
 
@@ -56,7 +56,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 </HorizontalStackLayout>
                                                 <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
                                                     <BoxView WidthRequest="1" BackgroundColor="#fff"/>
-                                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                                    <Label Text="{Binding DistanceCalucate}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
                                                     <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
                                                 </HorizontalStackLayout>
 
@@ -100,7 +100,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 <!-- Date and Time -->
                                                 <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
                                                     <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
-                                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding SessionDay}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
                                                     <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
                                                 </StackLayout>
 
@@ -116,7 +116,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 </HorizontalStackLayout>
                                                 <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
                                                     <BoxView WidthRequest="1" BackgroundColor="#fff"/>
-                                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                                    <Label Text="{Binding DistanceCalucate}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
                                                     <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
                                                 </HorizontalStackLayout>
 
@@ -160,7 +160,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 <!-- Date and Time -->
                                                 <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
                                                     <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
-                                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding SessionDay}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
                                                     <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
                                                 </StackLayout>
 
@@ -176,7 +176,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                                                 </HorizontalStackLayout>
                                                 <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
                                                     <BoxView WidthRequest="1" BackgroundColor="#fff"/>
-                                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                                    <Label Text="{Binding DistanceCalucate}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
                                                     <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
                                                 </HorizontalStackLayout>
 
@@ -190,6 +190,8 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
                 </tabview:SfTabItem>
             </tabview:SfTabView.Items>
         </tabview:SfTabView>
-       
+        <Frame IsVisible="{Binding IsBusy}" Style="{StaticResource ActivityIndicatorBackdrop}"/>
+        <ActivityIndicator HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
     </Grid>
 </ContentPage>
