@@ -31,18 +31,18 @@ public partial class SignUp : ContentPage
     }
     private void OnFrameTappedPractitioner(object sender, EventArgs e)
     {
-        PractitionerTextBox.IsVisible = true;
+        //PractitionerTextBox.IsVisible = true;
         PractitionerFrame.Stroke = Color.FromArgb("#00d9bc");
-        PatientTextBox.IsVisible = false;
+       // PatientTextBox.IsVisible = false;
 
         PatientFrame.Stroke = Color.FromArgb("#00FFFFFF");
         _authenticationVM.SelectedUserType = 2;
     }
     private void OnFrameTappedPatient(object sender, EventArgs e)
     {
-        PractitionerTextBox.IsVisible = false;
+        //PractitionerTextBox.IsVisible = false;
         PractitionerFrame.Stroke = Color.FromArgb("#00FFFFFF");
-        PatientTextBox.IsVisible = true;
+        //PatientTextBox.IsVisible = true;
         PatientFrame.Stroke = Color.FromArgb("#00d9bc");
         _authenticationVM.SelectedUserType = 1;
     }
