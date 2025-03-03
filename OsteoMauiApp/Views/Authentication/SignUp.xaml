@@ -14,7 +14,7 @@
                         <Label FontSize="15" Text="Hello user, start your journey!" FontAttributes="Bold" />
                     </StackLayout>
 
-                    <StackLayout Margin="0,30,0,0" Spacing="20" Orientation="Horizontal" >
+                    <StackLayout Margin="0,30,0,30" Spacing="20" Orientation="Horizontal" >
                         <!-- Practitioner Selection -->
                         <Border Padding="10" x:Name="PractitionerFrame" Stroke="#00d9bc" HorizontalOptions="FillAndExpand">
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
@@ -37,7 +37,6 @@
                             </Border.GestureRecognizers>
                         </Border>
                     </StackLayout>
-
                     <!-- User Input Fields -->
                     <StackLayout Spacing="10">
                         <StackLayout Spacing="0">
