@@ -1334,14 +1334,4 @@
 /OsteoMauiApp/obj/Debug/net8.0-android/lp/147/jl/R.txt
 /OsteoMauiApp/obj/Debug/net8.0-android/lp/148/jl/public.txt
 /OsteoMauiApp/obj/Debug/net8.0-android/lp/156/jl/R.txt
-/OsteoMauiApp/bin/Debug/net8.0-maccatalyst/maccatalyst-x64/OsteoMAUIApp.dll
-/OsteoMauiApp/bin/Debug/net8.0-maccatalyst/maccatalyst-x64/OsteoMAUIApp.pdb
-/OsteoMauiApp/bin/Debug/net8.0-maccatalyst/maccatalyst-x64/Syncfusion.Maui.DataForm.dll
-/OsteoMauiApp/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/OsteoMAUIApp.build.appxrecipe
-/OsteoMauiApp/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/OsteoMAUIApp.deps.json
-/OsteoMauiApp/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/OsteoMAUIApp.dll
-/OsteoMauiApp/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/OsteoMAUIApp.exe
-/OsteoMauiApp/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/OsteoMAUIApp.pdb
-/OsteoMauiApp/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/Syncfusion.Maui.DataForm.dll
-/OsteoMauiApp/obj/Debug/net8.0-ios/iossimulator-x64/resizetizer/f/MauiInfo.plist
-/OsteoMauiApp/obj/Debug/net8.0-maccatalyst/maccatalyst-x64/resizetizer/f/MauiInfo.plist
+/.vs/OsteoMAUIApp/v17/HierarchyCache.v1.txt

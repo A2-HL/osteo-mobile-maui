@@ -1,116 +1,122 @@
-﻿using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using System.Text.Json.Nodes;
 using OsteoMAUIApp.Helpers;
 using OsteoMAUIApp.Models.Authentication;
 using OsteoMAUIApp.Services.Interfaces;
-using OsteoMAUIApp.Views.Authentication;
 using OsteoMAUIApp.Models;
+using OsteoMAUIApp.Views.Authentication;
 
 namespace OsteoMAUIApp.Services.Implementations
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IRequestProvider request;
-        private readonly IDatabaseService databaseService;
-        readonly Uri baseUri = new Uri(GlobalSettings.Instance.APIsBaseUrl);
+        private readonly IRequestProvider _requestProvider;
+        private readonly IDatabaseService _databaseService;
 
         public AuthenticationService(IRequestProvider requestProvider, IDatabaseService databaseService)
         {
-            this.request = requestProvider;
-            this.databaseService = databaseService;
+            _requestProvider = requestProvider;
+            _databaseService = databaseService;
         }
+
         public async Task<LoginResponseModel> LoginAsync(LoginModel credentials)
         {
-            LoginResponseModel Response = null;
-            var uri = GlobalSettings.Instance.APIsBaseUrl + "Account/Signin";
+            var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Account/Signin";
+            var content = new StringContent(credentials.SerializeLoginFields(), Encoding.UTF8, "application/json");
 
-            try
+            if (!Helpers.Utility.IsLoggedIn || await Utility.IsSessionValid())
             {
-                var n = credentials.SerializeLoginFields();
-                var content = new StringContent(n);
-
-                if (!Helpers.Utility.IsLoggedIn || await Utility.IsSessionValid())
-                {
-                    HttpClient httpClient;
-                    httpClient = request.CreateHttpClient(GlobalSettings.Instance.access_token);
-
-
-                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    HttpResponseMessage response = await httpClient.PostAsync(uri, content);
-
-                    string serialized = await response.Content.ReadAsStringAsync();
-                    var _serializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                        DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                        NullValueHandling = NullValueHandling.Ignore
-                    };
-                    _serializerSettings.Converters.Add(new StringEnumConverter());
-                    Response = await Task.Run(() =>
-                        JsonConvert.DeserializeObject<LoginResponseModel>(serialized, _serializerSettings));
-                }
-                else
-                {
-                    (Application.Current as App).MainPage = new NavigationPage(new Login());
-                }
-                return Response;
+                return await ExecutePostAsync<LoginResponseModel>(uri, content);
             }
-            catch (Exception ex)
+            else
             {
-                Response = null;
-                await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                (Application.Current as App).MainPage = new NavigationPage(new Login());
+                return null;
             }
-            return Response;
         }
+
         public async Task<ResponseStatusModel> SignupAsync(SignUpModel credentials)
         {
-            ResponseStatusModel Response = null;
-            var uri = GlobalSettings.Instance.APIsBaseUrl + "Account/SignUp";
+            var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Account/SignUp";
+            var content = new StringContent(credentials.SerializeSignupFields(), Encoding.UTF8, "application/json");
+            return await ExecutePostAsync<ResponseStatusModel>(uri, content);
+        }
+
+        public async Task<ResponseStatusModel> ForgotPasswordAsync(LoginModel credentials)
+        {
+            var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Account/ForgotPassword";
+            var content = new StringContent(credentials.SerializeForgotPasswordFields(), Encoding.UTF8, "application/json");
+            return await ExecutePostAsync<ResponseStatusModel>(uri, content);
+        }
+
+        public async Task<LoginResponseModel> RefreshAccessToken(string refreshToken, string userId)
+        {
+            var uri = $"{GlobalSettings.Instance.APIsBaseUrl}drivers/refresh-tokens";
+            var body = new { driverId = userId, refreshToken = refreshToken };
+            var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+            return await ExecutePostAsync<LoginResponseModel>(uri, content);
+        }
+
+        public async Task<ResponseStatusModel> ResendVerificationEmail(string emailAddress)
+        {
+            var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Account/ResendVerificationEmail?email={emailAddress}";
+            return await ExecuteGetAsync<ResponseStatusModel>(uri);
+        }
+
+        #region Helper Methods
+        private async Task<T> ExecutePostAsync<T>(string uri, HttpContent content)
+        {
             try
             {
-                var n = credentials.SerializeSignupFields();
-                var content = new StringContent(n);
-
-                HttpClient httpClient;
-                httpClient = request.CreateHttpClient();
-
-
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                HttpResponseMessage response = await httpClient.PostAsync(uri, content);
-
-                string serialized = await response.Content.ReadAsStringAsync();
-                var _serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                    NullValueHandling = NullValueHandling.Ignore
-                };
-                _serializerSettings.Converters.Add(new StringEnumConverter());
-                var result = await Task.Run(() =>
-                    JsonConvert.DeserializeObject<ResponseStatusModel>(serialized, _serializerSettings));
-                
-                Response = result;
+                var httpClient = _requestProvider.CreateHttpClient(GlobalSettings.Instance.access_token);
+                var response = await httpClient.PostAsync(uri, content);
+                var serialized = await response.Content.ReadAsStringAsync();
+                return DeserializeResponse<T>(serialized);
             }
             catch (Exception ex)
             {
-                Response = null;
-                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                await ShowErrorAlert("Something went wrong, please try again later.");
+                return default;
             }
-            return Response;
-        }
-        public Task<bool> LogoutAsync()
-        {
-            throw new NotImplementedException();
         }
 
-        public Task<LoginResponseModel> RefreshAccessToken(string refreshToken, string userId)
+        private async Task<T> ExecuteGetAsync<T>(string uri)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var httpClient = _requestProvider.CreateHttpClient(GlobalSettings.Instance.access_token);
+                var response = await httpClient.GetAsync(uri);
+                var serialized = await response.Content.ReadAsStringAsync();
+                return DeserializeResponse<T>(serialized);
+            }
+            catch (Exception ex)
+            {
+                await ShowErrorAlert("Something went wrong, please try again later.");
+                return default;
+            }
         }
+
+        private T DeserializeResponse<T>(string serialized)
+        {
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            serializerSettings.Converters.Add(new StringEnumConverter());
+            return JsonConvert.DeserializeObject<T>(serialized, serializerSettings);
+        }
+
+        private async Task ShowErrorAlert(string message)
+        {
+            await (Application.Current as App).MainPage.DisplayAlert("Error", message, "OK");
+        }
+        #endregion
     }
 }

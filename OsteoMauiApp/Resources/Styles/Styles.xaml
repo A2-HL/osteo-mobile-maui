@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
+    <Color x:Key="ControlBG">#F5F8FA</Color>
+    <Color x:Key="Text">#181C32</Color>
+    <Color x:Key="ThemeColor">#00d9bc</Color>
     <Style x:Key="ErrorLabel" TargetType="Label">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="0,0,0,0" />
@@ -10,18 +12,54 @@
         <Setter Property="HorizontalOptions" Value="StartAndExpand" />
         <Setter Property="LineBreakMode" Value="WordWrap"/>
     </Style>
+    <!-- Style for Button -->
 
-    <Style x:Key="button" TargetType="Button">
+    <Style x:Key="SubmitButton" TargetType="Button">
         <Setter Property="TextColor" Value="White" />
-        <Setter Property="BackgroundColor" Value="#00d9bc" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ThemeColor}" />
         <Setter Property="FontSize" Value="16" />
     </Style>
+    <Style x:Key="InputEntry" TargetType="Entry">
+        <Setter Property="HeightRequest" Value="30" />
+    </Style>
+    <Style x:Key="SelectUserTypeImage" TargetType="Image">
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="40" />
+    </Style>
+    <Style x:Key="SelectUserTypeLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="HorizontalOptions" Value="Center" />
 
+    </Style>
+    <Style x:Key="CancelButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource ControlBG}" />
+        <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="TextTransform" Value="None"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource ControlBG}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#332196F3" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
     <Style x:Key="labeltextcolor" TargetType="Label">
         <Setter Property="TextColor" Value="#00d9bc" />
     </Style>
     <Style x:Key="ColoredBoldLabel" BasedOn="{StaticResource labeltextcolor}" TargetType="Label">
-        <Setter Property="TextColor" Value="#00d9bc" />
+        <Setter Property="TextColor" Value="{StaticResource ThemeColor}" />
     </Style>
     <Style x:Key="fontAttribute" TargetType="Label">
         <Setter Property="FontAttributes" Value="Bold" />
@@ -35,7 +73,7 @@
         <Setter Property="BackgroundColor" Value="Transparent"/>
         <Setter Property="PlaceholderColor" Value="Gray"/>
         <Setter Property="HeightRequest" Value="50"/>
-        
+
     </Style>
     <!-- Style for Activity Indicator Backdrop -->
     <Style x:Key="ActivityIndicatorBackdrop" TargetType="Frame">

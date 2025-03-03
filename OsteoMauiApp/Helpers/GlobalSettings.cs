@@ -51,13 +51,10 @@ namespace OsteoMAUIApp.Helpers
             }
         }
 
-        //Production URLS
-        //public const string ProdBaseUrl = "https://api.tapgrap.com/";
-        //public const string ProdWebBaseUrl = "app.tapgrap.com/";
-
+        
         //Staging URLS
-        public const string StageBaseUrl = "https://8wjtdmtj-44363.inc1.devtunnels.ms/";//"https://stagingapi.tapgrap.com/";
-        public const string StageWebBaseUrl = "stagingapi.tapgrap.com/";
+        public const string StageBaseUrl = "https://92w2kmm3-44363.inc1.devtunnels.ms/";
+        public const string StageWebBaseUrl = "92w2kmm3-44363.inc1.devtunnels.ms/";
 
 
         //OAuth Credentials for Android & IOS Specefic
@@ -134,7 +131,7 @@ namespace OsteoMAUIApp.Helpers
         public static GlobalSettings Instance { get; } = new GlobalSettings();
 
 
-
+      
 
         //Error Codes
         //200 or 201 When the request is succeeded
