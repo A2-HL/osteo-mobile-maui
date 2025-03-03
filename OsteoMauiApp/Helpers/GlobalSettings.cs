@@ -134,7 +134,7 @@ namespace OsteoMAUIApp.Helpers
         public static GlobalSettings Instance { get; } = new GlobalSettings();
 
 
-
+      
 
         //Error Codes
         //200 or 201 When the request is succeeded

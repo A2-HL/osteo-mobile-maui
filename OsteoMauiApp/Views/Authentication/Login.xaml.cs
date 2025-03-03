@@ -1,9 +1,9 @@
-using OsteoMAUIApp.ViewModels.Authentication;
+using OsteoMAUIApp.ViewModels;
 namespace OsteoMAUIApp.Views.Authentication;
 
 public partial class Login : ContentPage
 {
-    LoginVM _loginVM;
+    AuthenticationVM _loginVM;
     public Login()
     {
 
@@ -15,7 +15,7 @@ public partial class Login : ContentPage
         {
 
         }
-        _loginVM = new LoginVM(Navigation);
+        _loginVM = new AuthenticationVM(Navigation);
         BindingContext = _loginVM;
 
     }
@@ -25,14 +25,14 @@ public partial class Login : ContentPage
         PractitionerTextBox.IsVisible = true;
         PractitionerFrame.Stroke = Color.FromArgb("#00d9bc");
         PatientTextBox.IsVisible = false;
-        phoneinput.Text = "";
+        //phoneinput.Text = "";
         PatientFrame.Stroke = Color.FromArgb("#00FFFFFF");
         _loginVM.SelectedUserType = 2;
     }
     private void OnFrameTappedPatient(object sender, EventArgs e)
     {
         PractitionerTextBox.IsVisible = false;
-        emailinput.Text = "";
+        //emailinput.Text = "";
         PractitionerFrame.Stroke = Color.FromArgb("#00FFFFFF");
         PatientTextBox.IsVisible = true;
         PatientFrame.Stroke = Color.FromArgb("#00d9bc");
@@ -47,6 +47,9 @@ public partial class Login : ContentPage
     {
         _loginVM.LoginCommand.Execute(null);
     }
-   
+    private void OnForgotClicked(object sender, EventArgs e)
+    {
+        _loginVM.ForgotPasswordCommand.Execute(null);
+    }
 
 }

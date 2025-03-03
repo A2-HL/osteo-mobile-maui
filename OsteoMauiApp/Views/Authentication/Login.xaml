@@ -35,12 +35,10 @@
 
                 <StackLayout Margin="0,30,0,0" Spacing="20" Orientation="Horizontal" >
                     <!-- Practitioner Selection -->
-                    <Border Padding="10" x:Name="PractitionerFrame"
-           Stroke="#00d9bc"
-            HorizontalOptions="FillAndExpand">
+                    <Border Padding="10" x:Name="PractitionerFrame" Stroke="#00d9bc" HorizontalOptions="FillAndExpand">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                            <Image Source="practitioner.png" WidthRequest="40" HeightRequest="40"/>
-                            <Label Text="Practitioner" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                            <Image Source="practitioner.png" Style="{StaticResource SelectUserTypeImage}"/>
+                            <Label Text="Practitioner" Style="{StaticResource SelectUserTypeLabel}" />
                         </StackLayout>
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnFrameTappedPractitioner"/>
@@ -48,12 +46,10 @@
                     </Border>
 
                     <!-- Patient Selection -->
-                    <Border Padding="10" x:Name="PatientFrame"
-           Stroke="Transparent"
-            HorizontalOptions="FillAndExpand">
+                    <Border Padding="10" x:Name="PatientFrame" Stroke="Transparent" HorizontalOptions="FillAndExpand">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                            <Image Source="patient.png" WidthRequest="40" HeightRequest="40"/>
-                            <Label Text="Patient" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                            <Image Source="patient.png" Style="{StaticResource SelectUserTypeImage}"/>
+                            <Label Text="Patient" Style="{StaticResource SelectUserTypeLabel}" />
                         </StackLayout>
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnFrameTappedPatient"/>
@@ -64,7 +60,7 @@
                 <!-- Email Input (Visible when Practitioner is selected) -->
                 <StackLayout Spacing="0" x:Name="PractitionerTextBox">
                     <inputlayout:SfTextInputLayout Hint="Email">
-                        <Entry HeightRequest="30" x:Name="emailinput" Keyboard="Email" Text="{Binding LoginDetails.emailAddress}" ReturnType="Next"/>
+                        <Entry Style="{StaticResource InputEntry}" x:Name="emailinput" Keyboard="Email" Text="{Binding LoginDetails.emailAddress}" ReturnType="Next"/>
                     </inputlayout:SfTextInputLayout>
                     <Label Text="{Binding LoginDetails.emailAddressError}" Style="{StaticResource ErrorLabel}"/>
 
@@ -73,7 +69,7 @@
                 <!-- Phone Number Input (Visible when Patient is selected) -->
                 <StackLayout Spacing="0" x:Name="PatientTextBox"  IsVisible="False">
                     <inputlayout:SfTextInputLayout Hint="Phone Number">
-                        <Entry HeightRequest="30" x:Name="phoneinput" Text="{Binding LoginDetails.phoneNumber}" ReturnType="Next"/>
+                        <Entry Style="{StaticResource InputEntry}" x:Name="phoneinput" Text="{Binding LoginDetails.phoneNumber}" ReturnType="Next"/>
                     </inputlayout:SfTextInputLayout>
                     <Label Text="{Binding LoginDetails.phoneNumberError}" Style="{StaticResource ErrorLabel}"/>
 
@@ -82,18 +78,18 @@
 
                 <StackLayout Spacing="0">
                     <inputlayout:SfTextInputLayout Hint="Password" EnablePasswordVisibilityToggle="true">
-                        <Entry HeightRequest="30" IsPassword="True" Text="{Binding LoginDetails.currentPassword}" ReturnType="Done" Style="{StaticResource SFEntry}"/>
+                        <Entry HeightRequest="30"  IsPassword="True" Text="{Binding LoginDetails.currentPassword}" ReturnType="Done" Style="{StaticResource SFEntry}"/>
                     </inputlayout:SfTextInputLayout>
                     <Label Text="{Binding LoginDetails.currentPasswordError}" Style="{StaticResource ErrorLabel}"/>
                 </StackLayout>
 
                 <Label Text="Forgot Password ?"  Margin="0,-30,0,0" HorizontalOptions="End" Style="{StaticResource labeltextcolor}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer/>
+                        <TapGestureRecognizer Tapped="OnForgotClicked"/>
                     </Label.GestureRecognizers>
                 </Label>
 
-                <Button Clicked="OnLoginClicked" Text="Sign In" Style="{StaticResource button}"/>
+                <Button Clicked="OnLoginClicked" Text="Sign In" Style="{StaticResource SubmitButton}"/>
 
                 <StackLayout Margin="0,50,0,0" Orientation="Horizontal" HorizontalOptions="Center" Spacing="0">
                     <Label FontSize="Subtitle" Style="{StaticResource fontAttribute}" Text="Don't have an account ? "/>
