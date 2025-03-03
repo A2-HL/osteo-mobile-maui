@@ -21,6 +21,7 @@ namespace OsteoMAUIApp.ViewModels.Event
             _eventService = new EventService(new RequestProvider());
             Event = new EventModel();
             Reschedule = new RescheduleModel();
+            EventInvite = new EventInviteModel();
             TreatmentLengthOptions = new List<TreatmentLengthModel>
             {
                 new TreatmentLengthModel { Minuts = 15, Text = "15 Minutes" },
@@ -36,13 +37,18 @@ namespace OsteoMAUIApp.ViewModels.Event
             this.ReminderOptions.Add(new ReminderOptions { Text = "48 hours", Value = 2880.00 });
             this.ReminderOptions.Add(new ReminderOptions { Text = "60 hours", Value = 3600.00 });
             Event.treatmentLength = TreatmentLengthOptions.FirstOrDefault();
+            this.EventList = new List<DropdownListModel>();
+            this.EventList.Add(new DropdownListModel() { Guid = "dhdd87", Name = "Session 2025" });
+            this.EventList.Add(new DropdownListModel() { Guid= "shhs7666", Name = "Medical Conference" });
             CreateCommand = new Command(CreateEventClicked);
             RescheduleCommand = new Command(RescheduleEventClicked);
+            EventInviteCommand = new Command(EventInviteClicked);
         }
         #region |Private|
         INavigation _navigation;
         EventModel _event;
         RescheduleModel _rescheduleModel;
+        EventInviteModel _eventInviteModel;
         public string SessionDateFormate { get; set; }
         public string RescheduleDateFormate { get; set; }
         #endregion
@@ -73,6 +79,18 @@ namespace OsteoMAUIApp.ViewModels.Event
                 }
 
                 SetProperty(ref _rescheduleModel, value);
+            }
+        }
+        public EventInviteModel EventInvite
+        {
+            get { return this._eventInviteModel; }
+            set
+            {
+                if (this._eventInviteModel == value)
+                {
+                    return;
+                }
+                SetProperty(ref _eventInviteModel, value);
             }
         }
 
@@ -134,12 +152,13 @@ namespace OsteoMAUIApp.ViewModels.Event
         public List<DropdownListModel> PatientList { get; set; }
         public List<DropdownListModel> PractitionerList { get; set; }
         public List<ReminderOptions> ReminderOptions { get; set; }
-
+        public List<DropdownListModel> EventList { get; set; }
         #endregion
 
         #region |Commands|
         public Command CreateCommand;
         public Command RescheduleCommand;
+        public Command EventInviteCommand;
         #endregion
 
         #region |Methods|
@@ -220,6 +239,50 @@ namespace OsteoMAUIApp.ViewModels.Event
                         Reschedule.toDateStr = RescheduleDateFormate;
                     }
                     var res = await _eventService.RescheduleEventAsync(Reschedule);
+                    if (res != null)
+                    {
+                        if (res.statusCode == 200 || res.statusCode == 201)
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Success", res.statusMessage, "OK");
+                            await _navigation.PopModalAsync();
+                        }
+                        else if (res.statusCode == 401 || res.statusCode == 402 || res.statusCode == 404)
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", res.statusMessage, "OK");
+                        }
+                        else if (res.statusCode == 503)
+                        {
+                            Utility.ShowToastMessage(res.statusMessage, Utility.ToastDuration.Long);
+                        }
+                        else
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                        }
+                    }
+                    else
+                    {
+                        await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoSignupMessage, "OK");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                }
+            }
+            StopBusyIndicator();
+        }
+        private async void EventInviteClicked(object obj)
+        {
+            EventInvite.emailOrPhone = EventInvite.emailOrPhones?.Any() == true ? string.Join(",", EventInvite.emailOrPhones) : string.Empty;
+            if (IsBusy) return;
+
+            if (await EventInvite.ValidateModelForInvite())
+            {
+                StartBusyIndicator();
+                await Task.Delay(500);
+                try
+                {
+                    var res = await _eventService.EventInviteAsync(EventInvite);
                     if (res != null)
                     {
                         if (res.statusCode == 200 || res.statusCode == 201)

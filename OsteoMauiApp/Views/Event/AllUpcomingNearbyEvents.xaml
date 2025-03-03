@@ -4,8 +4,8 @@ xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OsteoMAUIApp.Views.Event.AllUpcomingNearbyEvents"
              Title="AllUpcomingNearbyEvents">
-    <Grid Padding="4" BackgroundColor="#F0F0F0">
-        <listview:SfListView x:Name="listView" AutoFitMode="DynamicHeight" ItemsSource="{Binding UpcommingEvents}">
+    <Grid Padding="4,4,4,0" BackgroundColor="#F0F0F0">
+        <listview:SfListView x:Name="listView" AutoFitMode="DynamicHeight" ItemTapped="SfListView_ItemTapped" ItemsSource="{Binding UpcommingEvents}">
             <listview:SfListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="5" Margin="0,5" BackgroundColor="#F0F0F0">
@@ -34,7 +34,7 @@ xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.
                                 <!-- Date and Time -->
                                 <StackLayout Grid.Row="1" Grid.Column="0" Padding="10">
                                     <Label Text="Date and Time" Padding="0,0,0,5" VerticalOptions="Center" FontSize="13" TextColor="#ACACAC" FontAttributes="Bold" />
-                                    <Label Text="{Binding Date}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
+                                    <Label Text="{Binding SessionDay}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold" />
                                     <Label Text="{Binding Time}" VerticalOptions="Center" FontSize="13" FontAttributes="Bold"/>
                                 </StackLayout>
 
@@ -50,7 +50,7 @@ xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Padding="0,10" Background="#59D6B8" Grid.Row="2" Spacing="5" VerticalOptions="Center" Grid.Column="1">
                                     <BoxView WidthRequest="1" BackgroundColor="#fff"/>
-                                    <Label Text="{Binding Distance}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
+                                    <Label Text="{Binding DistanceCalucate}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" FontAttributes="Bold" Margin="25,0,0,0" />
                                     <Label Text="km away" VerticalOptions="Center" HorizontalOptions="Center" FontSize="13" Margin="0,0,0,0" />
                                 </HorizontalStackLayout>
 
@@ -60,5 +60,8 @@ xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.
                 </DataTemplate>
             </listview:SfListView.ItemTemplate>
         </listview:SfListView>
+        <Frame IsVisible="{Binding IsBusy}" Style="{StaticResource ActivityIndicatorBackdrop}"/>
+        <ActivityIndicator HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
     </Grid>
 </ContentPage>

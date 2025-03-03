@@ -56,7 +56,7 @@ namespace OsteoMAUIApp.Helpers
         //public const string ProdWebBaseUrl = "app.tapgrap.com/";
 
         //Staging URLS
-        public const string StageBaseUrl = "https://stagingapi.tapgrap.com/";
+        public const string StageBaseUrl = "https://8wjtdmtj-44363.inc1.devtunnels.ms/";//"https://stagingapi.tapgrap.com/";
         public const string StageWebBaseUrl = "stagingapi.tapgrap.com/";
 
 
