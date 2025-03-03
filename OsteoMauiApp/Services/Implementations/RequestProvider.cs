@@ -321,7 +321,7 @@ namespace OsteoMAUIApp.Services.Implementations
                     response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     AuthenticationService _authService = new AuthenticationService(new RequestProvider(), DependencyService.Get<IDatabaseService>());
-                    var res = await _authService.LogoutAsync();
+                    //var res = await _authService.LogoutAsync();
                     return true;
                 }
             }
