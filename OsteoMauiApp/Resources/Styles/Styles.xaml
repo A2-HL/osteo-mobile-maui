@@ -6,7 +6,7 @@
     <Color x:Key="ThemeColor">#00d9bc</Color>
     <Style x:Key="ErrorLabel" TargetType="Label">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="0,-15,0,0" />
         <Setter Property="TextColor" Value="#F1416C" />
         <Setter Property="FontAttributes" Value="None" />
         <Setter Property="HorizontalOptions" Value="StartAndExpand" />

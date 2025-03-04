@@ -2,6 +2,7 @@
 using OsteoMAUIApp.Services.Implementations;
 using OsteoMAUIApp.Services.Interfaces;
 using OsteoMAUIApp.Views.Authentication;
+using OsteoMAUIApp.Views.Home;
 
 namespace OsteoMAUIApp
 {
@@ -15,7 +16,7 @@ namespace OsteoMAUIApp
             InitializeComponent();
 
             // Set Login page as the startup page
-            MainPage = new NavigationPage(new Login());
+            MainPage = new NavigationPage(new AppShell());
 
             //Register the database service
             DependencyService.Register<IDatabaseService, DatabaseService>();
@@ -43,7 +44,7 @@ namespace OsteoMAUIApp
             else
             {
                 // User is not logged in, navigate to the LoginPage
-                MainPage = new NavigationPage(new Login());
+                MainPage = new NavigationPage(new AppShell());
             }
         }
 

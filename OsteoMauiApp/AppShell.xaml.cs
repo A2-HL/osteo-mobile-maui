@@ -1,4 +1,5 @@
-﻿using OsteoMAUIApp.Views.Home;
+﻿using OsteoMAUIApp.Views.Event;
+using OsteoMAUIApp.Views.Home;
 
 namespace OsteoMAUIApp
 {
@@ -8,7 +9,8 @@ namespace OsteoMAUIApp
         {
             InitializeComponent();
             Routing.RegisterRoute("Dashboard", typeof(Dashboard));
-
+            Routing.RegisterRoute("MyEvents", typeof(MyEvents));
+            Routing.RegisterRoute("EventReschedule", typeof(EventReschedule));
         }
     }
 }

@@ -11,6 +11,31 @@ namespace OsteoMAUIApp.Models.Event
 {
    public class RescheduleModel: BaseViewModel
     {
+        public string _title;
+        public string title
+        {
+            get => _title;
+            set
+            {
+                if (this._title != value)
+                {
+                    SetProperty(ref _title, value);
+                }
+            }
+        }
+        public string _location;
+        public string location
+        {
+            get => _location;
+            set
+            {
+                if (this._location != value)
+                {
+                    SetProperty(ref _location, value);
+                }
+            }
+        }
+        public string guid { get; set; }
         public string _patientType;
         public string patientType
         {
@@ -146,6 +171,18 @@ namespace OsteoMAUIApp.Models.Event
             }
         }
 
+        public bool _isVisibleAll = true;
+        public bool IsVisibleAll
+        {
+            get => _isVisibleAll;
+            set
+            {
+                if (this._isVisibleAll != value)
+                {
+                    SetProperty(ref _isVisibleAll, value);
+                }
+            }
+        }
         #region|event model validations|
 
         //User field validations for event
@@ -158,8 +195,8 @@ namespace OsteoMAUIApp.Models.Event
                 ValidateToTime();
                 ValidateTreatmentLength();
             });
-            if (string.IsNullOrEmpty(sessionDayError) || string.IsNullOrEmpty(fTimeError)
-                || string.IsNullOrEmpty(tTimeError) || string.IsNullOrEmpty(treatmentLengthError))
+            if (string.IsNullOrEmpty(sessionDayError) && string.IsNullOrEmpty(fTimeError)
+                && string.IsNullOrEmpty(tTimeError) && string.IsNullOrEmpty(treatmentLengthError))
             {
                 return true;
             }
@@ -215,6 +252,7 @@ namespace OsteoMAUIApp.Models.Event
         {
             var data = new Dictionary<string, object>
             {
+                { "guid",  guid},
                 { "patientType", patientType },
                 { "sessionDay", sessionDay },
                 { "fromDateStr", fromDateStr },

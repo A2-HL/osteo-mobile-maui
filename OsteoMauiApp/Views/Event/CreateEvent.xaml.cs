@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using OsteoMAUIApp.ViewModels.Event;
 using Syncfusion.Maui.Calendar;
 
@@ -18,6 +19,11 @@ public partial class CreateEvent : ContentPage
 		}
         _eventVM = new EventVM(Navigation);
         BindingContext = _eventVM;
+    }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _eventVM.LoadUserGroupDll.Execute(null);
     }
     private void OnOpenDatePickerClicked(object sender, EventArgs e)
     {

@@ -20,6 +20,11 @@ public partial class InviteToEvent : ContentPage
         _eventVM = new EventVM(Navigation);
         BindingContext = _eventVM;
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _eventVM.LoadEventsDll.Execute(null);
+    }
     private void EmailEntry_Completed(object sender, EventArgs e)
     {
         var entry = sender as Entry;
@@ -54,8 +59,15 @@ public partial class InviteToEvent : ContentPage
             if (!_eventVM.EventInvite.emailOrPhones.Contains(entry.Text))
             {
                 _eventVM.EventInvite.emailOrPhones.Add(entry.Text);
+                _eventVM.EventInvite.emailOrPhone = string.Empty;
+                _eventVM.EventInvite.emailOrPhoneError = string.Empty;
+                entry.Text = "";
             }
-            entry.Text = "";
+            else
+            {
+                _eventVM.EventInvite.emailOrPhoneError = "Already in the list.";
+            }
+            
         }
         else
         {

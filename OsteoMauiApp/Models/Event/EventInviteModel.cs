@@ -131,12 +131,14 @@ namespace OsteoMAUIApp.Models.Event
             {
                 return true;
             }
-            return true;
+            return false;
         }
 
         private void ValidatePhoneNumberOrEmail()
         {
-            emailOrPhoneError = string.IsNullOrEmpty(emailOrPhone) ? "This Field is required." : "";
+            emailOrPhoneError = (string.IsNullOrWhiteSpace(emailOrPhone) && (emailOrPhones == null || !emailOrPhones.Any()))
+                                ? "This Field is required."
+                                : "";
         }
         private void ValidateEvent()
         {
@@ -166,7 +168,7 @@ namespace OsteoMAUIApp.Models.Event
         {
             var data = new Dictionary<string, object>
             {
-                { "emailOrPhone", emailOrPhone },
+                { "emailOrPhone", emailOrPhones },
                 { "inviteType", inviteType },
                 { "guid", eventInvite.Guid },
             };

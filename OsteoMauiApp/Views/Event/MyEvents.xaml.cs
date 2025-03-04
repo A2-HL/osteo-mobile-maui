@@ -21,9 +21,18 @@ public partial class MyEvents : ContentPage
     {
         if (e.DataItem is EventDetailModel selectedEvent)
         {
-            var detailPage = new EventDetail();
-            await detailPage.InitializeAsync(selectedEvent.Guid);
-            await Navigation.PushAsync(detailPage);//(new EventDetail(selectedEvent.Guid));
+            
+            try
+            {
+                _eventDetailVM.IsBusy = true; // Show loader
+                var detailPage = new EventDetail();
+                await detailPage.InitializeAsync(selectedEvent.Guid);
+                await Navigation.PushAsync(detailPage);//(new EventDetail(selectedEvent.Guid));
+            }
+            finally
+            {
+                _eventDetailVM.IsBusy = false; // Hide loader
+            }
         }
     }
 }

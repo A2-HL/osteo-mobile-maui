@@ -1,4 +1,5 @@
 using OsteoMAUIApp.ViewModels.Event;
+using Syncfusion.Maui.Buttons;
 using System;
 
 namespace OsteoMAUIApp.Views.Event;
@@ -20,8 +21,18 @@ public partial class EventDetail : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        //_eventDetailVM.guid = "01be4a51-7b5a-4cd0-8be0-404d7ac7002f";
         _eventDetailVM.LoadUpcommingEventSlots.Execute(null);
         _eventDetailVM.LoadParticepants.Execute(null);
+        _eventDetailVM.LoadEventDetail().ConfigureAwait(false); // Reload updated details
+    }
+    private async void Reshedule_Click(object sender, EventArgs e)
+    {
+        var button = (SfButton)sender;
+        var eventId = button.CommandParameter?.ToString();
+        if (!string.IsNullOrEmpty(eventId))
+        {
+            var reschedulePage = new EventReschedule(eventId);
+            await Navigation.PushAsync(reschedulePage);
+        }
     }
 }

@@ -3,7 +3,7 @@
 xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OsteoMAUIApp.Views.Event.AllUpcomingNearbyEvents"
-             Title="AllUpcomingNearbyEvents">
+             Title="Upcoming Events">
     <Grid Padding="4,4,4,0" BackgroundColor="#F0F0F0">
         <listview:SfListView x:Name="listView" AutoFitMode="DynamicHeight" ItemTapped="SfListView_ItemTapped" ItemsSource="{Binding UpcommingEvents}">
             <listview:SfListView.ItemTemplate>
