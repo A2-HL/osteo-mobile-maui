@@ -4,7 +4,7 @@ xmlns:tabview="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.Ta
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              x:Class="OsteoMAUIApp.Views.Event.MyEvents"
-             Title="MyEvents">
+             Title="My Events">
 
     <Grid Padding="4,4,4,0" BackgroundColor="#F0F0F0">
         <tabview:SfTabView x:Name="tabView" TabBarBackground="#59D6B8" IndicatorPlacement="Bottom" IndicatorBackground="#fff" TabBarPlacement="Top" TabWidthMode="Default" HeaderHorizontalTextAlignment="Center">

@@ -1,4 +1,7 @@
-﻿using OsteoMAUIApp.Helpers;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
+using Newtonsoft.Json;
+using OsteoMAUIApp.Helpers;
 using OsteoMAUIApp.Models.Event;
 using OsteoMAUIApp.Services.Implementations;
 using OsteoMAUIApp.Services.Interfaces;
@@ -21,6 +24,7 @@ namespace OsteoMAUIApp.ViewModels.Event
             requestModel = new EventRequestModel();
             slotrequestModel = new EventSlotRequestModel();
             Detail = new EventDetailModel();
+            Reschedule = new RescheduleModel();
             _eventService = new EventService(new RequestProvider());
             _navigation = navigation;
             LoadMyEvents = new Command(async () => await LoadEvents());
@@ -28,9 +32,17 @@ namespace OsteoMAUIApp.ViewModels.Event
             LoadDetail = new Command(async () => await LoadEventDetail());
             LoadUpcommingEventSlots = new Command(async () => await LoadUpcommingSlots());
             LoadParticepants = new Command(async () => await LoadParticepantList());
+            RescheduleCommand = new Command(RescheduleEventClicked);
+            LoadResheduleDetail = new Command(async () => await RescheduleDetail());
+            TreatmentLengthOptions = new List<TreatmentLengthModel>
+            {
+                new TreatmentLengthModel { Minuts = 15, Text = "15 Minutes" },
+                new TreatmentLengthModel { Minuts = 30, Text = "30 Minutes" }
+            };
         }
         #region |Private|
         INavigation _navigation;
+        RescheduleModel _rescheduleModel;
         public ObservableCollection<EventDetailModel> Events { get; set; } = new ObservableCollection<EventDetailModel>();
         #endregion
         #region |Commands|
@@ -39,7 +51,22 @@ namespace OsteoMAUIApp.ViewModels.Event
         public Command LoadDetail;
         public Command LoadUpcommingEventSlots;
         public Command LoadParticepants;
+        public Command RescheduleCommand;
+        public Command LoadResheduleDetail;
         #endregion
+        public RescheduleModel Reschedule
+        {
+            get { return this._rescheduleModel; }
+            set
+            {
+                if (this._rescheduleModel == value)
+                {
+                    return;
+                }
+
+                SetProperty(ref _rescheduleModel, value);
+            }
+        }
         public List<EventDetailModel> _upcommingEvents;
         public List<EventDetailModel> UpcommingEvents
         {
@@ -127,6 +154,7 @@ namespace OsteoMAUIApp.ViewModels.Event
                 SetProperty(ref _particepants, value);
             }
         }
+        public List<TreatmentLengthModel> TreatmentLengthOptions { get; set; }
         #region |Events|
         public EventRequestModel _requestModel;
         public EventRequestModel requestModel
@@ -142,7 +170,7 @@ namespace OsteoMAUIApp.ViewModels.Event
                 SetProperty(ref _requestModel, value);
             }
         }
-
+        public string RescheduleDateFormate { get; set; }
         public string _guid;
         public string guid
         {
@@ -157,7 +185,6 @@ namespace OsteoMAUIApp.ViewModels.Event
                 SetProperty(ref _guid, value);
             }
         }
-
         private async Task LoadEvents()
         {
             if (IsBusy) return;
@@ -209,17 +236,92 @@ namespace OsteoMAUIApp.ViewModels.Event
         }
         public async Task LoadEventDetail()
         {
-            if (IsBusy) return;
-            StartBusyIndicator();
-            await Task.Delay(500);
+            //if (IsBusy) return;
+            //StartBusyIndicator();
+            //await Task.Delay(500);
             try
             {
                 var res = await _eventService.EventDetail(guid);
                 if (!string.IsNullOrEmpty(res.Status) && res.Status == "success")
                 {
                     Detail = res.Data;
-                    //TimeStr = $"{Detail.FromTime} - {Detail.ToTime}";
-                    //PatientStr = Detail.Adults > 0 && Detail.Kids > 0 ? $"{Detail.Adults} adults  ,{Detail.Kids} kids": Detail.Adults > 0 && Detail.Kids < 1 ? $"{Detail.Adults} adults": Detail.Adults < 1 && Detail.Kids > 0 ? $"{Detail.Kids} kids":"";
+                 }
+                else
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoSignupMessage, "OK");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+            }
+            //StopBusyIndicator();
+        }
+
+        private async void RescheduleEventClicked(object obj)
+        {
+            if (IsBusy) return;
+
+            if (await Reschedule.ValidateModelForRescheudleEvent())
+            {
+                Reschedule.guid = guid;
+                StartBusyIndicator();
+                await Task.Delay(500);
+                try
+                {
+                    if (!string.IsNullOrEmpty(RescheduleDateFormate) && RescheduleDateFormate.Contains(" - "))
+                    {
+                        var splitdDate = RescheduleDateFormate.Split(" - ");
+                        Reschedule.fromDateStr = splitdDate[0];
+                        Reschedule.toDateStr = splitdDate[1];
+                    }
+                    if(!string.IsNullOrEmpty(RescheduleDateFormate) && !RescheduleDateFormate.Contains(" - "))
+                    {
+                        Reschedule.fromDateStr = RescheduleDateFormate;
+                        Reschedule.toDateStr = RescheduleDateFormate;
+                    }
+                    var res = await _eventService.RescheduleEventAsync(Reschedule);
+                    if (res != null)
+                    {
+                        if (res.status == "success")
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Success", res.statusMessage, "OK");
+                            await _navigation.PopAsync();
+                        }
+                        else if (res.status == "error")
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", res.statusMessage, "OK");
+                        }
+                        else
+                        {
+                            await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                        }
+                    }
+                    else
+                    {
+                        await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoSignupMessage, "OK");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", GlobalSettings.FailedtoProcessMessage, "OK");
+                }
+            }
+            StopBusyIndicator();
+        }
+        public async Task RescheduleDetail()
+        {
+            if (IsBusy) return;
+            StartBusyIndicator();
+            await Task.Delay(500);
+            try
+            {
+                var res = await _eventService.RescheduleDetail(guid);
+                if (!string.IsNullOrEmpty(res.Status) && res.Status == "success")
+                {
+                    //var data = (RescheduleModel)res.Data;
+                    //data.IsVisibleAll = true;
+                    Reschedule = res.Data;
                 }
                 else
                 {
@@ -232,7 +334,6 @@ namespace OsteoMAUIApp.ViewModels.Event
             }
             StopBusyIndicator();
         }
-
         #endregion
 
         #region Appointments

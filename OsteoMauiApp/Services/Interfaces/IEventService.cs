@@ -1,4 +1,5 @@
 ﻿using OsteoMAUIApp.Models;
+using OsteoMAUIApp.Models.Common;
 using OsteoMAUIApp.Models.Event;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace OsteoMAUIApp.Services.Interfaces
         Task<EventListResponseModel> LoadUpcomingNearbyEvents(EventRequestModel model);
         Task<EventResponseModel> EventDetail(string guid);
         Task<ParticepantResponseModel> LoadParticepants(EventSlotRequestModel model);
+        Task<List<DropdownListModel>> EventDropdownList();
+        Task<RescheduleResponseModel> RescheduleDetail(string guid);
+        Task<List<DropdownListModel>> UserGroupDropdownList();
         #endregion
 
         #region Appointments

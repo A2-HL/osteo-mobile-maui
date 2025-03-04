@@ -11,12 +11,14 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using OsteoMAUIApp.Models.Common;
 
 namespace OsteoMAUIApp.Services.Implementations
 {
    public class EventService: IEventService
     {
         private readonly IRequestProvider request;
+        string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDEwOTc1MDgsImV4cCI6MTc0MTEwNDcwOCwiaWF0IjoxNzQxMDk3NTA4LCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.qQztIfQ-1Sbh__Rkpq5kfBfadhzimgT8si8KqoyY8YM";
         public EventService(IRequestProvider requestProvider)
         {
             this.request = requestProvider;
@@ -32,7 +34,6 @@ namespace OsteoMAUIApp.Services.Implementations
                 var payload = model.SerializeCreateEventFields();
                 var content = new StringContent(payload, Encoding.UTF8, "application/json");
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDA5MDkyNTYsImV4cCI6MTc0MDkwOTg1NiwiaWF0IjoxNzQwOTA5MjU2LCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.Rk7q9nbgCgRsYdG2un_PiN-auxD5-SAC6Qepj4hbbdI"; 
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.PostAsync(uri, content);
@@ -59,16 +60,16 @@ namespace OsteoMAUIApp.Services.Implementations
                 
             }
         }
-        public async Task<ResponseStatusModel> RescheduleEventAsync(RescheduleModel model)
+
+        public async Task<ResponseStatusModel> EventInviteAsync(EventInviteModel model)
         {
             ResponseStatusModel Response = null;
             try
             {
-                var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Event/RescheduleEvent";
-                var payload = model.SerializeRescheduleEventFields();
+                var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Event/InviteUser";
+                var payload = model.SerializeInviteFields();
                 var content = new StringContent(payload, Encoding.UTF8, "application/json");
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDA5MDkyNTYsImV4cCI6MTc0MDkwOTg1NiwiaWF0IjoxNzQwOTA5MjU2LCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.Rk7q9nbgCgRsYdG2un_PiN-auxD5-SAC6Qepj4hbbdI";
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.PostAsync(uri, content);
@@ -88,41 +89,6 @@ namespace OsteoMAUIApp.Services.Implementations
                 };
                 return JsonConvert.DeserializeObject<ResponseStatusModel>(serialized, settings);
             }
-            catch (Exception)
-            {
-                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
-                return Response = null;
-            }
-        }
-        public async Task<ResponseStatusModel> EventInviteAsync(EventInviteModel model)
-        {
-            ResponseStatusModel Response = null;
-            var uri = "https://8wjtdmtj-44363.inc1.devtunnels.ms/api/" + "Event/InviteUser";//GlobalSettings.Instance.APIsBaseUrl + "Event/InviteUser";
-            try
-            {
-                var _httpClient = new HttpClient();
-                var n = model.SerializeInviteFields();
-                var content = new StringContent(n);
-
-                HttpClient httpClient;
-                httpClient = request.CreateHttpClient();
-                //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "");
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                HttpResponseMessage response = await httpClient.PostAsync(uri, content);
-
-                string serialized = await response.Content.ReadAsStringAsync();
-                var _serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                    NullValueHandling = NullValueHandling.Ignore
-                };
-                _serializerSettings.Converters.Add(new StringEnumConverter());
-                var result = await Task.Run(() =>
-                    JsonConvert.DeserializeObject<ResponseStatusModel>(serialized, _serializerSettings));
-
-                Response = result;
-            }
             catch (Exception ex)
             {
                 Response = null;
@@ -140,7 +106,6 @@ namespace OsteoMAUIApp.Services.Implementations
                 var payload = model.SerializeEventRequestFilterFields();
                 var content = new StringContent(payload, Encoding.UTF8, "application/json");
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDEwMDM4MTMsImV4cCI6MTc0MTAwNDQxMywiaWF0IjoxNzQxMDAzODEzLCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.O7mS2dWSvxSWrMQj-qQ8gBO1AQfl6JfgnsBDk0V3lU4";
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.PostAsync(uri, content);
@@ -175,7 +140,6 @@ namespace OsteoMAUIApp.Services.Implementations
                 var payload = model.SerializeEventRequestFilterFields();
                 var content = new StringContent(payload, Encoding.UTF8, "application/json");
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDA5ODUxMTcsImV4cCI6MTc0MDk4NTcxNywiaWF0IjoxNzQwOTg1MTE3LCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.myi7mXrJdllsVSjQ3Iv-Wf9d3OYbvLK0dhBCY0PhqUw";
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.PostAsync(uri, content);
@@ -208,7 +172,6 @@ namespace OsteoMAUIApp.Services.Implementations
             {
                 var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Event/Detail?id={guid}";
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDEwMTg3NzEsImV4cCI6MTc0MTAxOTM3MSwiaWF0IjoxNzQxMDE4NzcxLCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.389Zh2HOVjqlAIv02BVZ5Nq_XVIXMTw8BKSF-CPSqY0";
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.GetAsync(uri);
@@ -244,7 +207,6 @@ namespace OsteoMAUIApp.Services.Implementations
                 var payload = model.SerializeRequestFields();
                 var content = new StringContent(payload, Encoding.UTF8, "application/json");
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDEwMTg3NzEsImV4cCI6MTc0MTAxOTM3MSwiaWF0IjoxNzQxMDE4NzcxLCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.389Zh2HOVjqlAIv02BVZ5Nq_XVIXMTw8BKSF-CPSqY0";
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.PostAsync(uri, content);
@@ -271,6 +233,104 @@ namespace OsteoMAUIApp.Services.Implementations
             }
         }
 
+        public async Task<List<DropdownListModel>> EventDropdownList()
+        {
+            var resp = new List<DropdownListModel>();
+            try
+            {
+                var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Event/EventDropdownList";
+                using var httpClient = request.CreateHttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await httpClient.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                    return resp;
+                }
+                var serialized = await response.Content.ReadAsStringAsync();
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = { new StringEnumConverter() }
+                };
+                return JsonConvert.DeserializeObject<List<DropdownListModel>>(serialized, settings);
+            }
+            catch (Exception)
+            {
+                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                return resp;
+            }
+        }
+        public async Task<ResponseStatusModel> RescheduleEventAsync(RescheduleModel model)
+        {
+            ResponseStatusModel Response = null;
+            try
+            {
+                var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Event/RescheduleEvent";
+                var payload = model.SerializeRescheduleEventFields();
+                var content = new StringContent(payload, Encoding.UTF8, "application/json");
+                using var httpClient = request.CreateHttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await httpClient.PostAsync(uri, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                    return Response = null;
+                }
+                var serialized = await response.Content.ReadAsStringAsync();
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = { new StringEnumConverter() }
+                };
+                return JsonConvert.DeserializeObject<ResponseStatusModel>(serialized, settings);
+            }
+            catch (Exception)
+            {
+                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                return Response = null;
+            }
+        }
+        public async Task<RescheduleResponseModel> RescheduleDetail(string guid)
+        {
+            var resp = new RescheduleResponseModel();
+            try
+            {
+                var uri = $"{GlobalSettings.Instance.APIsBaseUrl}Event/ResheduleDetail?id={guid}";
+                using var httpClient = request.CreateHttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await httpClient.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                    return resp;
+                }
+                var serialized = await response.Content.ReadAsStringAsync();
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = { new StringEnumConverter() }
+                };
+                return JsonConvert.DeserializeObject<RescheduleResponseModel>(serialized, settings);
+            }
+            catch (Exception)
+            {
+                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                return resp;
+            }
+        }
         #endregion
 
         #region Appointments
@@ -283,7 +343,6 @@ namespace OsteoMAUIApp.Services.Implementations
                 var payload = model.SerializeRequestFields();
                 var content = new StringContent(payload, Encoding.UTF8, "application/json");
                 using var httpClient = request.CreateHttpClient();
-                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJJZCI6IjcyMCIsIlVzZXJuYW1lIjoiQW1lbGlhIE1hcmN1cyIsIlVzZXJUeXBlSWQiOiIxIiwiUGhvbmVOdW1iZXIiOiI3OTc5ODg2OTk5Iiwic3ViIjoiYW1lbGlhQG1haWxpbmF0b3IuY29tIiwiZW1haWwiOiJhbWVsaWFAbWFpbGluYXRvci5jb20iLCJqdGkiOiI4OGI4OTQxOC0zOTc0LTRmZTUtYjUwZC1mMmUwZGU3YjVjZmUiLCJuYmYiOjE3NDEwMTgzMTcsImV4cCI6MTc0MTAxODkxNywiaWF0IjoxNzQxMDE4MzE3LCJpc3MiOiJhbnkiLCJhdWQiOiJ0ZXN0In0.uX6UGeWwAy79DrMD4rRN3TltMcnQ09k0mbmBR1Ot1Nk";
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.PostAsync(uri, content);
@@ -310,6 +369,39 @@ namespace OsteoMAUIApp.Services.Implementations
             }
         }
         #endregion
+
+        public async Task<List<DropdownListModel>> UserGroupDropdownList()
+        {
+            var resp = new List<DropdownListModel>();
+            try
+            {
+                var uri = $"{GlobalSettings.Instance.APIsBaseUrl}UserGroupPatient/GetUserGroups";
+                using var httpClient = request.CreateHttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim());
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await httpClient.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                {
+                    await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                    return resp;
+                }
+                var serialized = await response.Content.ReadAsStringAsync();
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = { new StringEnumConverter() }
+                };
+                return JsonConvert.DeserializeObject<List<DropdownListModel>>(serialized, settings);
+            }
+            catch (Exception)
+            {
+                await (Application.Current as App).MainPage.DisplayAlert("Error", "Something went wrong, please try again later", "OK");
+                return resp;
+            }
+        }
 
     }
 }

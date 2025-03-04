@@ -53,7 +53,7 @@ namespace OsteoMAUIApp.Helpers
 
         
         //Staging URLS
-        public const string StageBaseUrl = "https://92w2kmm3-44363.inc1.devtunnels.ms/";
+        public const string StageBaseUrl = "https://8wjtdmtj-44363.inc1.devtunnels.ms/";
         public const string StageWebBaseUrl = "92w2kmm3-44363.inc1.devtunnels.ms/";
 
 

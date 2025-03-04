@@ -1,23 +1,30 @@
 using OsteoMAUIApp.ViewModels.Event;
-using System.Globalization;
 
 namespace OsteoMAUIApp.Views.Event;
 
 public partial class EventReschedule : ContentPage
 {
-    EventVM _eventVM;
-    public EventReschedule()
+    public string eventGuid { get; set; }
+    EventDetailVM _eventDetailVM;
+    public EventReschedule(string guid)
 	{
         try
         {
             InitializeComponent();
+            eventGuid = guid;
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
-        _eventVM = new EventVM(Navigation);
-        BindingContext = _eventVM;
+        _eventDetailVM = new EventDetailVM(Navigation);
+        BindingContext = _eventDetailVM;
+    }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _eventDetailVM.guid = eventGuid; 
+        _eventDetailVM.LoadResheduleDetail.Execute(null);
     }
     private void OnOpenDatePickerClicked(object sender, EventArgs e)
     {
@@ -33,7 +40,7 @@ public partial class EventReschedule : ContentPage
             sessionDate.IsVisible = false;
             sessionDate.IsOpen = false;
             dateEntry.Text = dateRange.EndDate != null && dateRange.EndDate.HasValue ? $"{startDate.Value.ToString("MMM dd")}  -  {endDate.Value.ToString("MMM dd")}" : startDate.Value.ToString("MMM dd"); // Display selected range in Entry
-            _eventVM.RescheduleDateFormate = dateRange.EndDate != null && dateRange.EndDate.HasValue ? $"{startDate.Value.ToString("MM-dd-yyyy")}  -  {endDate.Value.ToString("MM-dd-yyyy")}" : startDate.Value.ToString("MM-dd-yyyy");
+            _eventDetailVM.RescheduleDateFormate = dateRange.EndDate != null && dateRange.EndDate.HasValue ? $"{startDate.Value.ToString("MM-dd-yyyy")}  -  {endDate.Value.ToString("MM-dd-yyyy")}" : startDate.Value.ToString("MM-dd-yyyy");
         }
     }
     private void OnOpenFTimePickerClicked(object sender, EventArgs e)
@@ -60,6 +67,6 @@ public partial class EventReschedule : ContentPage
     }
     private void RescheduleEventClicked(object sender, EventArgs e)
     {
-        _eventVM.RescheduleCommand.Execute(null);
+        _eventDetailVM.RescheduleCommand.Execute(null);
     }
 }

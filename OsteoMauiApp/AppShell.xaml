@@ -6,20 +6,40 @@
     xmlns:local="clr-namespace:OsteoMAUIApp"
     xmlns:profile="clr-namespace:OsteoMAUIApp.Views.ProfileSettings"
     xmlns:event="clr-namespace:OsteoMAUIApp.Views.Event"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
     Title="OsteoMAUIApp">
+    <FlyoutItem Title="Home" Icon="home.png" Route="MainPage">
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}" />
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Upcoming Events" Route="AllUpcomingNearbyEvents">
+        <ShellContent
+            Title="Upcoming Events"
+            ContentTemplate="{DataTemplate event:AllUpcomingNearbyEvents}" />
+    </FlyoutItem>
 
+    <FlyoutItem Title="My Events" Route="MyEvents">
+        <ShellContent
+            Title="My Events"
+            ContentTemplate="{DataTemplate event:MyEvents}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Create Event" Route="CreateEvent">
+        <ShellContent
+            Title="Create Event"
+            ContentTemplate="{DataTemplate event:CreateEvent}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Invite To Event" Route="InviteToEvent">
+        <ShellContent
+            Title="Invite To Event"
+            ContentTemplate="{DataTemplate event:InviteToEvent}" />
+    </FlyoutItem>
     <!--<ShellContent
     Title="Profile Settings"
     ContentTemplate="{DataTemplate profile:ProfileIndex}"
     Route="ProfileIndex" />-->
-    <ShellContent
-        Title="MyEvents"
-        ContentTemplate="{DataTemplate event:MyEvents}"
-        Route="MyEvents" />
+   
 </Shell>

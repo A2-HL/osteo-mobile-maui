@@ -81,6 +81,12 @@ namespace OsteoMAUIApp.Models.Event
         public string Status { get; set; }
         public string Message { get; set; }
     }
+    public class RescheduleResponseModel
+    {
+        public RescheduleModel Data { get; set; }
+        public string Status { get; set; }
+        public string Message { get; set; }
+    }
     public class EventSlotResponseModel
     {
         public List<EventSlotModel> Data { get; set; }

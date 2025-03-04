@@ -242,8 +242,36 @@ namespace OsteoMAUIApp.Models.Event
                 SetProperty(ref _patientType, value);
             }
         }
-        public int adults { get; set; }
-        public int kids { get; set; }
+        private int? _adults;
+        public int? adults
+        {
+            get => _adults;
+            set
+            {
+                if (value < 0)
+                    _adults = 0;
+                else if (value > 10)
+                    _adults = 10;
+                else
+                    _adults = value;
+                OnPropertyChanged();
+            }
+        }
+        private int? _kids;
+        public int? kids
+        {
+            get => _kids;
+            set
+            {
+                if (value < 0)
+                    _kids = 0;
+                else if (value > 10)
+                    _kids = 10;
+                else
+                    _kids = value;
+                OnPropertyChanged();
+            }
+        }
 
         private List<DropdownListModel> _userGroupIds=new();
 
@@ -280,17 +308,16 @@ namespace OsteoMAUIApp.Models.Event
             await Task.Run(() =>
             {
                 ValidateTitle();
-                ValidateLocation();
                 ValidateSessionDay();
                 ValidateFromTime();
                 ValidateToTime();
                 ValidateReminder();
                 ValidateTreatmentLength();
             });
-            if (string.IsNullOrEmpty(titleError) || string.IsNullOrEmpty(locationError)
-                || string.IsNullOrEmpty(sessionDayError) || string.IsNullOrEmpty(fTimeError)
-                || string.IsNullOrEmpty(tTimeError) || string.IsNullOrEmpty(reminderError)
-                || string.IsNullOrEmpty(treatmentLengthError))
+            if (string.IsNullOrEmpty(titleError)
+                && string.IsNullOrEmpty(sessionDayError) && string.IsNullOrEmpty(fTimeError)
+                && string.IsNullOrEmpty(tTimeError) && string.IsNullOrEmpty(reminderError)
+                && string.IsNullOrEmpty(treatmentLengthError))
             {
                 return true;
             }
