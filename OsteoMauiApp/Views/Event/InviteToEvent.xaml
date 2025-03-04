@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:Class="OsteoMAUIApp.Views.Event.InviteToEvent"
+             Title="Invite To Event">
+    <VerticalStackLayout>
+        <VerticalStackLayout Padding="20" VerticalOptions="Fill" HorizontalOptions="Fill">
+            <StackLayout Spacing="0">
+                <Label Text="Event" FontSize="14" TextColor="Gray" />
+                <inputs:SfComboBox x:Name="EventComboBox"
+             ItemsSource="{Binding EventList}"
+             DisplayMemberPath="Name"
+             SelectedItem="{Binding EventInvite.eventInvite}" />
+                <Label Text="{Binding EventInvite.eventGuidError}" Style="{StaticResource ErrorLabel}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Invite Type" FontSize="14" Margin="0,10,20,0" TextColor="Gray"/>
+                <buttons:SfRadioGroup  x:Name="InviteTypeRadiobuttonGroup" Orientation="Horizontal"  SelectedValue="{Binding EventInvite.inviteType}"  HorizontalOptions="Start">
+                    <buttons:SfRadioButton Text="Email" CheckedColor="#59D6B8" FontSize="14" TextColor="Gray" Value="2"/>
+                    <buttons:SfRadioButton Text="Phone Number" CheckedColor="#59D6B8" FontSize="14" TextColor="Gray" Value="1"/>
+                </buttons:SfRadioGroup>
+            </StackLayout>
+            <StackLayout Spacing="0" x:Name="EmailBox" IsVisible="{Binding EventInvite.IsEmailVisible}">
+                <Label Text="Email" FontSize="14" TextColor="Gray" />
+                <Entry x:Name="emailentry" FontSize="14" Completed="EmailEntry_Completed" Placeholder="type email and press enter" Style="{StaticResource SFEntry}">
+                </Entry>
+                <listview:SfListView x:Name="emaillistView" Margin="0,10" AutoFitMode="DynamicHeight" ItemsSource="{Binding EventInvite.emailOrPhones}">
+                    <listview:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Margin="0,5" Grid.Column="0" Text="{Binding}" FontSize="14" TextColor="Gray"/>
+                                <buttons:SfButton Grid.Row="0" HorizontalOptions="End" Margin="0,2" Grid.Column="1" Text="x"
+                                    FontSize="14" Clicked="Remove_Clicked" CommandParameter="{Binding}" WidthRequest="40" HeightRequest="40" Background="#59D6B8"/>
+                            </Grid>
+                        </DataTemplate>
+                    </listview:SfListView.ItemTemplate>
+                </listview:SfListView>
+                <Label Text="{Binding EventInvite.emailOrPhoneError}" Style="{StaticResource ErrorLabel}" />
+            </StackLayout>
+            <StackLayout Spacing="0" x:Name="PhoneBox" IsVisible="{Binding EventInvite.IsPhoneNumberVisible}">
+                <Label Text="Phone No." FontSize="14" TextColor="Gray" />
+                <Entry x:Name="phonentry" VerticalOptions="Center" HeightRequest="40" FontSize="14" Completed="PhoneEntry_Completed" Placeholder="Type phone no. and press enter" Style="{StaticResource SFEntry}">
+                </Entry>
+                <listview:SfListView x:Name="phonelistView" Margin="0,10" AutoFitMode="DynamicHeight" ItemsSource="{Binding EventInvite.emailOrPhones}">
+                    <listview:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalOptions="FillAndExpand" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Margin="0,6" Grid.Column="0" Text="{Binding}" FontSize="14" TextColor="Gray"/>
+                                <buttons:SfButton Grid.Row="0" HorizontalOptions="End" Margin="0,2" Grid.Column="1" Text="x"
+                   Clicked="Remove_Clicked" CommandParameter="{Binding}" FontSize="14" WidthRequest="40" HeightRequest="40" Background="#59D6B8"/>
+                            </Grid>
+                        </DataTemplate>
+                    </listview:SfListView.ItemTemplate>
+                </listview:SfListView>
+                <Label Text="{Binding EventInvite.emailOrPhoneError}" Style="{StaticResource ErrorLabel}" />
+            </StackLayout>
+            <buttons:SfButton Margin="0,30" x:Name="sfButton" Background="#59D6B8" VerticalOptions="End" Clicked="EventInviteClicked" Text="Send Invite" Style="{StaticResource button}" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
